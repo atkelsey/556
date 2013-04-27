@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <time.h>
+#include <unistd.h>;
 
 using namespace std;
 net * nets;
@@ -120,7 +122,17 @@ int readBenchmark(const char *fileName, routingInst *rst){
 }
 
 int solveRouting(routingInst *rst){
-  /*********** TO BE FILLED BY YOU **********/
+	time_t startTime, elapsedTime;
+	time(&startTime);
+	int seconds = 0;
+	while (seconds < (15*60)){
+		seconds = time(&elapsedTime)-startTime;
+		printf("%d\n", seconds);
+	}
+
+
+
+
 
   return 1;
 }
