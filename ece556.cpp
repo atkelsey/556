@@ -1,12 +1,6 @@
 // ECE556 - Copyright 2013 University of Wisconsin-Madison.  All Rights Reserved.
 
 #include "ece556.h"
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <time.h>
-#include <unistd.h>;
 
 using namespace std;
 net * nets;
@@ -126,7 +120,7 @@ int solveRouting(routingInst *rst){
 	time(&startTime);
 	int seconds = 0;
 	while (seconds < (15*60)){ //main loop: add all end cases here
-		//Git check
+
 
 
 

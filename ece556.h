@@ -1,5 +1,12 @@
 // ECE556 - Copyright 2013 University of Wisconsin-Madison.  All Rights Reserved.
 
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <time.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 #ifndef ECE556_H
 #define ECE556_H
@@ -117,6 +124,8 @@ int solveRouting(routingInst *rst);
      output: 1 if successful, 0 otherswise
   */
  int release(routingInst *rst);
+
+ int manhattanDistance(point *a, point *b);
 
 
 #endif // ECE556_H
