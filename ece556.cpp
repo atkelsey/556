@@ -125,9 +125,12 @@ int solveRouting(routingInst *rst){
 	time_t startTime, elapsedTime;
 	time(&startTime);
 	int seconds = 0;
-	while (seconds < (15*60)){
+	while (seconds < (15*60)){ //main loop: add all end cases here
+
+
+
+
 		seconds = time(&elapsedTime)-startTime;
-		printf("%d\n", seconds);
 	}
 
 
