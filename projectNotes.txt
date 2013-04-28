@@ -1,0 +1,15 @@
+RIP UP AND REROUTE
+
+Use a* for every net you want to rewrite
+
+create maps for a* between 
+-point and group
+-point and parent(point)
+-point and distance(double)
+-point and score(double)
+
+use a priority queue
+-overwrite comparison functions for scores(higher values are worse) pop these off the queue first
+
+Deciding which nets to rip up
+-update scores on fly. if a net is completely uncongested leave it.

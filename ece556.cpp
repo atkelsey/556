@@ -116,11 +116,23 @@ int readBenchmark(const char *fileName, routingInst *rst){
 }
 
 int solveRouting(routingInst *rst){
+	//initial solution goes here
+	int i, incAmount;
+	//incAmount = sizeof(net);
+	for (i = 0; i < numNets; i++) {
+		//go through all nets and give a net assignment
+		
+		net *temp = &rst->nets[i];
+		
+	}
 	time_t startTime, elapsedTime;
 	time(&startTime);
 	int seconds = 0;
-	while (seconds < (15*60)){ //main loop: add all end cases here
-
+	
+	while (seconds < (15*60)){ //main loop: add all end cases here (TOF is not increasing over multiple runs)
+		//Compute edge weights
+		//Order nets in the priority queue (highest vales are worst)
+		//route each net UPdate edge util/weights
 
 
 
