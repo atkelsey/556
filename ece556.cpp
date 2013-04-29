@@ -5,7 +5,11 @@
 using namespace std;
 net * nets;
 point * pins;
+int *edge_caps;
 int block = 0;
+int xGridSize;
+int yGridSize;
+
 int readBenchmark(const char *fileName, routingInst *rst){
 	ifstream myFile(fileName,ifstream::in);
 	if (!myFile){ //if the file was not successfully opened
@@ -18,7 +22,6 @@ int readBenchmark(const char *fileName, routingInst *rst){
 	int net_cnt = 0;
 	int pin_cnt = 0;
 	while (!getline(myFile, line).eof()){
-		//cout << line << endl;
 		istringstream iss(line);
 		string result;
 		if (getline(iss, result, ' ')){
@@ -31,7 +34,9 @@ int readBenchmark(const char *fileName, routingInst *rst){
 				getline(iss,token, ' ');
 				istringstream (token) >> rst->gy;
 				int x = rst->gx;
+				xGridSize = x;
 				int y = rst->gy;
+				yGridSize = y;
 				rst->numEdges = y*(x - 1) + x*(y - 1);
 				cout << "grid = " << rst->gx << "*" << rst->gy << " with "<< rst->numEdges << " edges" << endl;
 			}
@@ -40,6 +45,9 @@ int readBenchmark(const char *fileName, routingInst *rst){
 				string token;
 				getline(iss, token, ' ');
 				istringstream(token) >> rst->cap;
+
+				edge_caps = new int[rst->numEdges];
+				std::fill(edge_caps, edge_caps + rst->numEdges, rst->cap);
 				cout << "capacity = " << rst->cap << endl;
 			}
 			//parses number of nets
@@ -92,10 +100,10 @@ int readBenchmark(const char *fileName, routingInst *rst){
 				getline(iss,token,'\n');
 				istringstream(token) >> cap;
 
-				/*
-				calculate new edge capacities
-				*/
-
+				point *p1_ptr = &p1;
+				point *p2_ptr = &p2;
+				int edge = getEdge(p1_ptr,p2_ptr, rst->gx, rst->gy);
+				edge_caps[edge] = cap;
 				block--;
 			}
 			else{
@@ -104,6 +112,11 @@ int readBenchmark(const char *fileName, routingInst *rst){
 		}
 	}
 	rst->nets = nets;
+	rst->edgeCaps = edge_caps;
+	for (int i = 0; i < rst->numEdges ; i++){
+		cout << rst->edgeCaps[i] << "\t";
+	}
+	cout << endl;
 	for (int i = 0; i < rst->numNets; i++){
 		cout << "Net n" << rst->nets[i].id;
 		cout << " num pins: " << rst->nets[i].numPins << endl;
@@ -111,6 +124,7 @@ int readBenchmark(const char *fileName, routingInst *rst){
 			cout << " pin " << j << ": " << rst->nets[i].pins[j].x << "," << rst->nets[i].pins[j].y << endl;
 		}
 	}
+
 	myFile.close();
 	return 1;
 }

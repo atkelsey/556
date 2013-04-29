@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <map>
-#include "grid.h"
+
 
 #ifndef ECE556_H
 #define ECE556_H
@@ -131,6 +131,8 @@ int solveRouting(routingInst *rst);
 
  int getEdge(point *a, point *b, int xGrid, int yGrid);
 
+ extern int xGridSize;
+ extern int yGridSize;
 
 #endif // ECE556_H
 
