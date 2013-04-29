@@ -9,7 +9,7 @@ int block = 0;
 int readBenchmark(const char *fileName, routingInst *rst){
 	ifstream myFile(fileName,ifstream::in);
 	if (!myFile){ //if the file was not successfully opened
-		cout << "file not read" << endl;
+		cout << "Unable to open " << fileName << " for reading" << endl;
 		myFile.close();
 		return 0;
 	}
@@ -119,7 +119,7 @@ int solveRouting(routingInst *rst){
 	//initial solution goes here
 	int i, incAmount;
 	//incAmount = sizeof(net);
-	for (i = 0; i < numNets; i++) {
+	for (i = 0; i < rst->numNets; i++) {
 		//go through all nets and give a net assignment
 		
 		net *temp = &rst->nets[i];
@@ -149,7 +149,23 @@ int solveRouting(routingInst *rst){
 int writeOutput(const char *outRouteFile, routingInst *rst){
   /*********** TO BE FILLED BY YOU **********/
 
-  return 1;
+	ofstream outFile(outRouteFile);
+	if (!outFile){
+		cout << "Unable to open " << outRouteFile << " for writing" << endl;
+		outFile.close();
+		return 0;
+	}
+	for (int i = 0; i < rst->numNets; i++){
+		outFile << "n" << rst->nets->id << endl;
+		for (int j = 0; j < rst->nets[i].croutes->numSegs; j++){
+			outFile << "(" << rst->nets[i].croutes->segments[j].p1.x << "," << rst->nets[i].croutes->segments[j].p1.y << ")-";
+			outFile << "(" << rst->nets[i].croutes->segments[j].p2.x << "," << rst->nets[i].croutes->segments[j].p2.y << ")" << endl;
+		}
+		outFile << "!" << endl;
+	}
+
+	outFile.close();
+	return 1;
 }
 
 
