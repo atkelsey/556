@@ -1,0 +1,17 @@
+given array of nets, pins
+
+point - an x and y coordinate
+segment - a straight line (collection of edges with no bends) starting at
+	point a ending at point be. contains num edges and an array of edges
+route - array of segments that make up a route contains numsegs and array o
+	segs
+net - collection of candidate routes. contains num routes, array of routes, array of pins, num pins and an id
+
+routing instance - x and y dimension of grid
+default capacity
+number of nets
+array of nets
+number of edges
+array of edge caps
+array of edgeUtils
+

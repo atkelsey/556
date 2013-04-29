@@ -117,12 +117,16 @@ int readBenchmark(const char *fileName, routingInst *rst){
 
 int solveRouting(routingInst *rst){
 	//initial solution goes here
-	int i, incAmount;
+	int i, j, incAmount;
 	//incAmount = sizeof(net);
-	for (i = 0; i < numNets; i++) {
+	for (i = 0; i < rst->numNets; i++) {
 		//go through all nets and give a net assignment
-		
-		net *temp = &rst->nets[i];
+		net *tempNet = &rst->nets[i];
+		for (j = 0; j < tempNet->numPins; j++) {
+			route *tempRoute = tempNet->croutes;
+
+		}
+		temp->
 		
 	}
 	time_t startTime, elapsedTime;
