@@ -102,7 +102,7 @@ int readBenchmark(const char *fileName, routingInst *rst){
 
 				point *p1_ptr = &p1;
 				point *p2_ptr = &p2;
-				int edge = getEdge(p1_ptr,p2_ptr, rst->gx, rst->gy);
+				int edge = getEdge(p1_ptr,p2_ptr);
 				edge_caps[edge] = cap;
 				block--;
 			}
@@ -142,7 +142,7 @@ int solveRouting(routingInst *rst){
 			//route *tempRoute = &(tempNet->croutes[i]);
 			point *currPin = &(tempNet->pins[j]);
 
-			tempEdge = getEdge(prevPin, currPin, rst->gx, rst->gy);
+			tempEdge = getEdge(prevPin, currPin);
 
 		}
 		

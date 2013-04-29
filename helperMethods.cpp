@@ -22,8 +22,8 @@
 		 return (smallerPt->x + smallerPt->y*(xGridSize -1));
 	 }
  }
- segment* getSegment(point *a, point *b){
-	 segment xSeg = new segment;
+ /*segment* getSegment(point *a, point *b){
+	 segment xSeg;
 	 point *smallerPt;
 	 segment* segPtr = &xSeg;
 	 if (a->x == b->x){
@@ -44,7 +44,7 @@
 		 }
 		 return (smallerPt->x + smallerPt->y*(xGridSize -1));
 	 }
- }
+ }*/
  route* getLRoute(point *a, point *b) {
 	 route lorFlat;
 	 route *ptr = &lorFlat;
