@@ -128,8 +128,8 @@ int solveRouting(routingInst *rst){
 			point *currPin = &(tempNet->pins[j]);
 
 		}
-		temp->
 		
+
 	}
 	time_t startTime, elapsedTime;
 	time(&startTime);
