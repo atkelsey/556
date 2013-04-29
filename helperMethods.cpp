@@ -15,7 +15,6 @@
  }
 
  int getEdge(point *smallerPt, point *largerPt){//Returns edge between two points
-	 point *smallerPt;
 	 if (smallerPt->x == largerPt->x){
 		 return (yGridSize*(xGridSize - 1) + (smallerPt->x + smallerPt->y*xGridSize));
 	 }
@@ -47,14 +46,14 @@
 	 }
  }
  route* getLRoute(point *a, point *b) {
-	 route lorFlat = new route;
+	 route lorFlat;
 	 route *ptr = &lorFlat;
 	 point *small;
 	 point *large;
 	 int i;
 	 ptr->numSegs = 0;
 	 if (a->x != b->x){
-		 segment xSeg = new segment;
+		 segment xSeg;
 		 segment* xSegPtr = &xSeg;
 		 if (a->x < b->x){
 			 small = a;
@@ -71,7 +70,7 @@
 
 	 }
 	 if (a->y != b->y){
-		 segment ySeg = new segment;
+		 segment ySeg;
 		 segment* ySegPtr = &ySeg;
 		 if (a->y < b->y){
 			 small = a;
@@ -82,8 +81,8 @@
 			 large = a;
 		 }
 		 for (i = 0; i < (large->y - small->y); i++){
-			// xSegPtr->edges[i] = getEdge(small, large);
-			// xSegPtr->numEdges++;
+			 ySegPtr->edges[i] = getEdge(small, large);
+			 ySegPtr->numEdges++;
 		 }
 	 }
  }
