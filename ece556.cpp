@@ -121,9 +121,11 @@ int solveRouting(routingInst *rst){
 	//incAmount = sizeof(net);
 	for (i = 0; i < rst->numNets; i++) {
 		//go through all nets and give a net assignment
-		net *tempNet = &rst->nets[i];
-		for (j = 0; j < tempNet->numPins; j++) {
-			route *tempRoute = tempNet->croutes;
+		net *tempNet = &(rst->nets[i]);
+		point *prevPin = &(tempNet->pins[0]);
+		for (j = 1; j < tempNet->numPins; j++) {
+			//route *tempRoute = &(tempNet->croutes[i]);
+			point *currPin = &(tempNet->pins[j]);
 
 		}
 		temp->

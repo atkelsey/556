@@ -128,6 +128,8 @@ int solveRouting(routingInst *rst);
 
  int manhattanDistance(point *a, point *b);
 
+ int getEdge(point *a, point *b, int xGrid, int yGrid);
+
 
 #endif // ECE556_H
 
