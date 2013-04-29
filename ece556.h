@@ -129,7 +129,11 @@ int solveRouting(routingInst *rst);
 
  int manhattanDistance(point *a, point *b);
 
- int getEdge(point *a, point *b, int xGrid, int yGrid);
+ int getEdge(point *smallerPt, point *largerPt);
+
+ int getYEdge(point *smallerPt);
+
+ int getXEdge(point *smallerPt);
 
  extern int xGridSize;
  extern int yGridSize;
