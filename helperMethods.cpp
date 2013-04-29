@@ -24,7 +24,7 @@
 	 }
  }
  segment* getSegment(point *a, point *b){
-	 segment Seg = new segment;
+	 segment xSeg = new segment;
 	 point *smallerPt;
 	 segment* segPtr = &xSeg;
 	 if (a->x == b->x){
@@ -82,8 +82,8 @@
 			 large = a;
 		 }
 		 for (i = 0; i < (large->y - small->y); i++){
-			 xSegPtr->edges[i] = getEdge(small, large);
-			 xSegPtr->numEdges++;
+			// xSegPtr->edges[i] = getEdge(small, large);
+			// xSegPtr->numEdges++;
 		 }
 	 }
  }
