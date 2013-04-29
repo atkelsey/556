@@ -123,9 +123,12 @@ int solveRouting(routingInst *rst){
 		//go through all nets and give a net assignment
 		net *tempNet = &(rst->nets[i]);
 		point *prevPin = &(tempNet->pins[0]);
+		int tempEdge;
 		for (j = 1; j < tempNet->numPins; j++) {
 			//route *tempRoute = &(tempNet->croutes[i]);
 			point *currPin = &(tempNet->pins[j]);
+
+			tempEdge = getEdge(prevPin, currPin, rst->gx, rst->gy);
 
 		}
 		
