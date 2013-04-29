@@ -126,8 +126,8 @@ int solveRouting(routingInst *rst){
 			route *tempRoute = tempNet->croutes;
 
 		}
-		temp->
 		
+
 	}
 	time_t startTime, elapsedTime;
 	time(&startTime);

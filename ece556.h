@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <map>
+#include "grid.h"
 
 #ifndef ECE556_H
 #define ECE556_H
