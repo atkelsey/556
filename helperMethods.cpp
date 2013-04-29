@@ -6,41 +6,31 @@
 	 return abs(a->x - b->x) + abs(a->y - b->y);
  }
 
- int getXEdge(point *smallerPt){//Return the edge directly right of given point
-	return (smallerPt->x + smallerPt->y*(xGridSize -1));
+ int getXEdge(point *a){//Return the edge directly right of given point
+	return (a->x + a->y*(xGridSize -1));
  }
 
- int getYEdge(point *smallerPt){ //Returns the edge directly above the given point
-	return (yGridSize*(xGridSize - 1) + (smallerPt->x + smallerPt->y*xGridSize));
+ int getYEdge(point *a){ //Returns the edge directly above the given point
+	return (yGridSize*(xGridSize - 1) + (a->x + a->y*xGridSize));
  }
 
  int getEdge(point *a, point *b){//Returns edge between two points
-	 if (a->x == b->x){
-		 return (yGridSize*(xGridSize - 1) + (smallerPt->x + smallerPt->y*xGridSize));
-	 }
-	 else {
-		 return (smallerPt->x + smallerPt->y*(xGridSize -1));
-	 }
- }
- segment* getSegment(point *a, point *b){
-	 segment xSeg = new segment;
 	 point *smallerPt;
-	 segment* segPtr = &xSeg;
 	 if (a->x == b->x){
-		 if (a->y > b->y){
-			 smallerPt = b;
-		 }
-		 else {
+		 if (a->x < b->x){
 			 smallerPt = a;
+		 }
+		 else{
+			 smallerPt = b;
 		 }
 		 return (yGridSize*(xGridSize - 1) + (smallerPt->x + smallerPt->y*xGridSize));
 	 }
 	 else {
-		 if (a->x > b->x){
-			 smallerPt = b;
-		 }
-		 else {
+		 if (a->y < b->y){
 			 smallerPt = a;
+		 }
+		 else{
+			 smallerPt = b;
 		 }
 		 return (smallerPt->x + smallerPt->y*(xGridSize -1));
 	 }
@@ -68,7 +58,8 @@
 			 xSegPtr->edges[i] = getXEdge(small);
 			 xSegPtr->numEdges++;
 		 }
-
+		 ptr->segments[ptr->numSegs] = *xSegPtr;
+		 ptr->numSegs++;
 	 }
 	 if (a->y != b->y){
 		 segment ySeg;
@@ -85,6 +76,8 @@
 			 ySegPtr->edges[i] = getYEdge(small);
 			 ySegPtr->numEdges++;
 		 }
+		 ptr->segments[ptr->numSegs] = *ySegPtr;
+		 ptr->numSegs++;
 	 }
  }
 
