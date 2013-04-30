@@ -22,12 +22,12 @@ int readBenchmark(const char *fileName, routingInst *rst){
 	int net_cnt = 0;
 	int pin_cnt = 0;
 	while (!getline(myFile, line).eof()){
-		istringstream iss(line);
 		string result;
-		if (getline(iss, result, ' ')){
-			//cout << result << endl;
+		istringstream iss(line);
+
+		if (getline(iss,result,' ')){
 			//parses the grid dimensions
-			if (result == "grid"){
+			if (result.find("grid")!=string::npos){
 				string token;
 				getline(iss,token, ' ');
 				istringstream (token) >> rst->gx;
@@ -38,25 +38,25 @@ int readBenchmark(const char *fileName, routingInst *rst){
 				int y = rst->gy;
 				yGridSize = y;
 				rst->numEdges = y*(x - 1) + x*(y - 1);
-				cout << "grid = " << rst->gx << "*" << rst->gy << " with "<< rst->numEdges << " edges" << endl;
+			//	cout << "grid = " << rst->gx << "*" << rst->gy << " with "<< rst->numEdges << " edges" << endl;
 			}
 			//parses the edge capacity
-			else if (result == "capacity"){
+			else if (result.find("capacity") != string::npos){
 				string token;
 				getline(iss, token, ' ');
 				istringstream(token) >> rst->cap;
 
 				edge_caps = new int[rst->numEdges];
 				std::fill(edge_caps, edge_caps + rst->numEdges, rst->cap);
-				cout << "capacity = " << rst->cap << endl;
+			//	cout << "capacity = " << rst->cap << endl;
 			}
 			//parses number of nets
-			else if (result == "num"){
+			else if (result.find("num")!=string::npos){
 				string token;
 				getline(iss, token, ' ');
 				getline(iss, token, ' ');
 				istringstream(token) >> rst->numNets;
-				cout << "num nets = " << rst->numNets << endl;
+			//	cout << "num nets = " << rst->numNets << endl;
 				nets = new net[rst->numNets];
 			}
 			//parses the net and number of pins
@@ -67,7 +67,7 @@ int readBenchmark(const char *fileName, routingInst *rst){
 				getline(iss, token, ' ');
 				istringstream(token) >> net.numPins;
 				nets[net_cnt] = net;
-				cout << "Net = n" << nets[net_cnt].id << endl;
+				//cout << "Net = n" << nets[net_cnt].id << endl;
 				pins = new point[nets[net_cnt].numPins];
 				net_cnt++;
 				pin_cnt = 0;
@@ -113,7 +113,7 @@ int readBenchmark(const char *fileName, routingInst *rst){
 	}
 	rst->nets = nets;
 	rst->edgeCaps = edge_caps;
-	for (int i = 0; i < rst->numEdges ; i++){
+/*	for (int i = 0; i < rst->numEdges ; i++){
 		cout << rst->edgeCaps[i] << "\t";
 	}
 	cout << endl;
@@ -123,7 +123,7 @@ int readBenchmark(const char *fileName, routingInst *rst){
 		for (int j = 0; j < rst->nets[i].numPins; j++){
 			cout << " pin " << j << ": " << rst->nets[i].pins[j].x << "," << rst->nets[i].pins[j].y << endl;
 		}
-	}
+	}*/
 
 	myFile.close();
 	return 1;
@@ -157,7 +157,7 @@ int solveRouting(routingInst *rst){
 
 
 	cout << "Completed routing\n";
-  return 1;
+	return 1;
 }
 
 int writeOutput(const char *outRouteFile, routingInst *rst){
@@ -184,9 +184,22 @@ int writeOutput(const char *outRouteFile, routingInst *rst){
 
 
 int release(routingInst *rst){
-  /*********** TO BE FILLED BY YOU **********/
-
-  return 1;
+	rst->cap = 0;
+	rst->numEdges = 0;
+	rst->gx = 0;
+	rst->gy = 0;
+	delete [] rst->edgeCaps;
+	rst->edgeCaps = NULL;
+	delete [] rst->edgeUtils;
+	rst->edgeUtils = NULL;
+	for (int i = 0; i < rst->numNets; i++){
+		delete [] rst->nets[i].croutes;
+		delete [] rst->nets[i].pins;
+	}
+	rst->numNets = 0;
+	delete rst->nets;
+	rst->nets = NULL;
+	return 1;
 }
 
 

@@ -7,6 +7,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <algorithm>
 #include <map>
 
 
