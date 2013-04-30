@@ -131,9 +131,13 @@ int solveRouting(routingInst *rst);
 
  int getEdge(point *smallerPt, point *largerPt);
 
- int getYEdge(point *smallerPt);
+ int getYEdge(point smallerPt);
 
- int getXEdge(point *smallerPt);
+ int getXEdge(point smallerPt);
+
+ int updateUtil(routingInst* rst);
+
+ void getLRoute(net *theNet);
 
  extern int xGridSize;
  extern int yGridSize;

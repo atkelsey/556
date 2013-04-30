@@ -130,42 +130,33 @@ int readBenchmark(const char *fileName, routingInst *rst){
 }
 
 int solveRouting(routingInst *rst){
+	cout << "Started routing...\n";
 	//initial solution goes here
 	int i, j, incAmount;
 	//incAmount = sizeof(net);
 	for (i = 0; i < rst->numNets; i++) {
 		//go through all nets and give a net assignment
-		net *tempNet = &(rst->nets[i]);
-		point *prevPin = &(tempNet->pins[0]);
-		int tempEdge;
-		for (j = 1; j < tempNet->numPins; j++) {
-			//route *tempRoute = &(tempNet->croutes[i]);
-			point *currPin = &(tempNet->pins[j]);
-
-			tempEdge = getEdge(prevPin, currPin);
-
-		}
-		
-
+		cout << "routing " << i << "...\n";
+		getLRoute(&(rst->nets[i]));
 	}
 	time_t startTime, elapsedTime;
 	time(&startTime);
 	int seconds = 0;
 	
-	while (seconds < (15*60)){ //main loop: add all end cases here (TOF is not increasing over multiple runs)
-		//Compute edge weights
-		//Order nets in the priority queue (highest vales are worst)
-		//route each net UPdate edge util/weights
+//	while (seconds < (15*60)){ //main loop: add all end cases here (TOF is not increasing over multiple runs)
+//		//Compute edge weights
+//		//Order nets in the priority queue (highest vales are worst)
+//		//route each net UPdate edge util/weights
+//
+//
+//
+//		seconds = time(&elapsedTime)-startTime;
+//	}
 
 
 
-		seconds = time(&elapsedTime)-startTime;
-	}
 
-
-
-
-
+	cout << "Completed routing\n";
   return 1;
 }
 
@@ -179,7 +170,7 @@ int writeOutput(const char *outRouteFile, routingInst *rst){
 		return 0;
 	}
 	for (int i = 0; i < rst->numNets; i++){
-		outFile << "n" << rst->nets->id << endl;
+		outFile << "n" << rst->nets[i].id << endl;
 		for (int j = 0; j < rst->nets[i].croutes->numSegs; j++){
 			outFile << "(" << rst->nets[i].croutes->segments[j].p1.x << "," << rst->nets[i].croutes->segments[j].p1.y << ")-";
 			outFile << "(" << rst->nets[i].croutes->segments[j].p2.x << "," << rst->nets[i].croutes->segments[j].p2.y << ")" << endl;

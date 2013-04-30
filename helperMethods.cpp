@@ -6,12 +6,12 @@
 	 return abs(a->x - b->x) + abs(a->y - b->y);
  }
 
- int getXEdge(point *a){//Return the edge directly right of given point
-	return (a->x + a->y*(xGridSize -1));
+ int getXEdge(point a){//Return the edge directly right of given point
+	return (a.x + a.y*(xGridSize -1));
  }
 
- int getYEdge(point *a){ //Returns the edge directly above the given point
-	return (yGridSize*(xGridSize - 1) + (a->x + a->y*xGridSize));
+ int getYEdge(point a){ //Returns the edge directly above the given point
+	return (yGridSize*(xGridSize - 1) + (a.x + a.y*xGridSize));
  }
 
  int getEdge(point *a, point *b){//Returns edge between two points
@@ -35,50 +35,76 @@
 		 return (smallerPt->x + smallerPt->y*(xGridSize -1));
 	 }
  }
- route* getLRoute(point *a, point *b) {
-	 route lorFlat;
-	 route *ptr = &lorFlat;
+
+ void getLRoute(net *theNet) {
+	 int i, j;
+	 theNet->croutes = new route[1];
+	 point a;//the smaller coordinate
+	 point b;//the larger coordinate
 	 point temp;
-	 point *small = &temp;
-	 point *large;
-	 int i;
-	 ptr->numSegs = 0;
-	 if (a->x != b->x){
-		 segment xSeg;
-		 segment* xSegPtr = &xSeg;
-		 if (a->x < b->x){
-			 small = a;
-			 large = b;
-		 }
-		 else {
-			 small = b;
-			 large = a;
-		 }
-		 for (i = 0; i < (large->x - small->x); i++){
-			 xSegPtr->edges[i] = getXEdge(small);
-			 xSegPtr->numEdges++;
-		 }
-		 ptr->segments[ptr->numSegs] = xSeg;
-		 ptr->numSegs++;
+	 route lorFlat;
+	 lorFlat.numSegs = 0;
+	 lorFlat.segments = new segment[2*(theNet->numPins)];
+	 for (j = 1; j < theNet->numPins; j++){
+		 a = theNet->pins[j-1];
+		 b = theNet->pins[j];
+		 	 if (a.x != b.x){
+		 		 segment xSeg;
+		 		 if (a.x > b.x){
+		 			 temp = a;
+		 			 a = b;
+		 			 b = temp;
+		 		 }
+		 		 xSeg.p1.x = a.x;
+		 		 xSeg.p1.y = a.y;
+		 		 xSeg.p2.x = b.x;
+		 		 xSeg.p2.y = a.y;
+		 		 xSeg.numEdges = (b.x - a.x);
+		 		 xSeg.edges = new int[xSeg.numEdges];
+		 		 for (i = 0; i < xSeg.numEdges; i++){
+		 			 xSeg.edges[i] = getXEdge(a);
+		 			 a.x++;
+		 		 }
+		 		 lorFlat.segments[lorFlat.numSegs] = xSeg;
+		 		 lorFlat.numSegs++;
+		 	 }
+		 	 if (a.y != b.y){
+		 		 segment ySeg;
+		 		 if (a.y > b.y){
+		 			 temp = a;
+		 			 a = b;
+		 			 b = temp;
+		 		 }
+		 		 ySeg.p1.x = a.x;
+		 		 ySeg.p1.y = a.y;
+		 		 ySeg.p2.x = a.x;
+		 		 ySeg.p2.y = b.y;
+		 		 ySeg.numEdges = (b.y - a.y);
+		 		 ySeg.edges = new int[ySeg.numEdges];
+		 		 for (i = 0; i < ySeg.numEdges; i++){
+		 			 ySeg.edges[i] = getYEdge(a);
+		 			 a.y++;
+		 		 }
+		 		 lorFlat.segments[lorFlat.numSegs] = ySeg;
+		 		 lorFlat.numSegs++;
+		 	 }
 	 }
-	 if (a->y != b->y){
-		 segment ySeg;
-		 segment* ySegPtr = &ySeg;
-		 if (a->y < b->y){
-			 small = a;
-			 large = b;
+	 theNet->croutes[0] = lorFlat;
+ }
+
+ int updateUtil(routingInst* rst) {//Returns total overflow
+	 int i, j, k, TOF, tempEdge;
+	 for (i = 0; i < rst->numNets; i++){
+		 for (j = 0; j < rst->nets[i].croutes[0].numSegs; j++){
+			 for(k = 0; k < rst->nets[i].croutes[0].segments[j].numEdges; k++){
+				 tempEdge = rst->nets[i].croutes[0].segments[j].edges[k];
+				 rst->edgeUtils[tempEdge]++;
+				 if (rst->edgeUtils[tempEdge] > rst->edgeCaps[tempEdge]){
+					 TOF++;
+				 }
+			 }
 		 }
-		 else {
-			 small = b;
-			 large = a;
-		 }
-		 for (i = 0; i < (large->y - small->y); i++){
-			 ySegPtr->edges[i] = getYEdge(small);
-			 ySegPtr->numEdges++;
-		 }
-		 ptr->segments[ptr->numSegs] = ySeg;
-		 ptr->numSegs++;
 	 }
-	 return ptr;
+	 return TOF;
  }
 
