@@ -60,7 +60,7 @@ int readBenchmark(const char *fileName, routingInst *rst){
 				nets = new net[rst->numNets];
 			}
 			//parses the net and number of pins
-			else if (result.find('n') != string::npos){
+			else if (result.find('n')!= string::npos){
 				string token;
 				net net;
 				net.id = net_cnt;
@@ -132,16 +132,17 @@ int readBenchmark(const char *fileName, routingInst *rst){
 int solveRouting(routingInst *rst){
 	cout << "Started routing...\n";
 	//initial solution goes here
-	int i, j, incAmount;
+	int i;
+	//int incAmount;
 	//incAmount = sizeof(net);
 	for (i = 0; i < rst->numNets; i++) {
 		//go through all nets and give a net assignment
 		cout << "routing " << i << "...\n";
 		getLRoute(&(rst->nets[i]));
 	}
-	time_t startTime, elapsedTime;
-	time(&startTime);
-	int seconds = 0;
+//	time_t startTime, elapsedTime;
+//	time(&startTime);
+//	int seconds = 0;
 	
 //	while (seconds < (15*60)){ //main loop: add all end cases here (TOF is not increasing over multiple runs)
 //		//Compute edge weights
