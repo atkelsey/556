@@ -25,7 +25,12 @@ int readBenchmark(const char *fileName, routingInst *rst){
 		string result;
 		istringstream iss(line);
 
-		if (getline(iss,result,' ')){
+		if (line.find("\t")!=string::npos){
+			getline(iss,result, '\t');
+		}
+		else{
+			getline(iss,result, ' ');
+		}
 			//parses the grid dimensions
 			if (result.find("grid")!=string::npos){
 				string token;
@@ -109,7 +114,6 @@ int readBenchmark(const char *fileName, routingInst *rst){
 			else{
 				istringstream(result) >> block;
 			}
-		}
 	}
 	rst->nets = nets;
 	rst->edgeCaps = edge_caps;
