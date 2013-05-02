@@ -20,6 +20,8 @@ int readBenchmark(const char *fileName, routingInst *rst){
 	string line;
 	int net_cnt = 0;
 	int pin_cnt = 0;
+	int medX = 0;
+	int medY = 0;
 	while (!getline(myFile, line).eof()){
 		string result;
 		istringstream iss(line);
@@ -75,17 +77,23 @@ int readBenchmark(const char *fileName, routingInst *rst){
 				pins = new point[nets[net_cnt].numPins];
 				net_cnt++;
 				pin_cnt = 0;
+				medX = 0;
+				medY = 0;
 			}
 			//parses each pin
 			else if ((pin_cnt < nets[net_cnt - 1].numPins) && ((net_cnt-1) < rst->numNets) ){
 				point pin;
 				istringstream(result)>>pin.x;
+				medX = pin.x + medX;
 				string token;
 				getline(iss,token,'\n');
 				istringstream(token) >> pin.y;
+				medY = pin.y + medY;
 				pins[pin_cnt] = pin;
 				pin_cnt++;
 				if (pin_cnt == nets[net_cnt - 1].numPins){
+					nets[net_cnt - 1].median.x = medX / pin_cnt;
+					nets[net_cnt - 1].median.y = medY / pin_cnt;
 					nets[net_cnt - 1].pins = pins;
 				}
 			}

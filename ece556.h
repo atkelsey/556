@@ -10,8 +10,8 @@
 #include <algorithm>
 #include <map>
 #include <vector>
-using std::vector;
-using std::map;
+#include <queue>
+using namespace std;
 
 
 #ifndef ECE556_H
@@ -26,9 +26,14 @@ using std::map;
  {
    int x ; /* x coordinate ( >=0 in the routing grid)*/
    int y ; /* y coordinate ( >=0 in the routing grid)*/
-
+   int locScore;
  } point ;
 
+ struct PointComparator {
+     bool operator() (const point& p1, const point& p2) {
+         return p1.locScore > p2.locScore; //calls your operator
+     }
+ };
 
   /**
   * A structure to represent a segment
@@ -67,6 +72,8 @@ using std::map;
    point *pins ; 	/* array of pins (or terminals) of the net. */
    int numCRoutes ; 	/* number of (candidate) routes of the net. This may be equal to one (only one candidate route) in your implementation. */
    route *croutes ;	/* array of candidate routes of the net. */
+   point median ;
+   priority_queue<point, vector<point>, PointComparator> pQuePins;
 
   } net ;
 
