@@ -17,7 +17,6 @@ int readBenchmark(const char *fileName, routingInst *rst){
 		myFile.close();
 		return 0;
 	}
-
 	string line;
 	int net_cnt = 0;
 	int pin_cnt = 0;
@@ -158,16 +157,11 @@ int solveRouting(routingInst *rst){
 //		seconds = time(&elapsedTime)-startTime;
 //	}
 
-
-
-
 	cout << "Completed routing\n";
 	return 1;
 }
 
 int writeOutput(const char *outRouteFile, routingInst *rst){
-  /*********** TO BE FILLED BY YOU **********/
-
 	ofstream outFile(outRouteFile);
 	if (!outFile){
 		cout << "Unable to open " << outRouteFile << " for writing" << endl;
@@ -186,7 +180,6 @@ int writeOutput(const char *outRouteFile, routingInst *rst){
 	outFile.close();
 	return 1;
 }
-
 
 int release(routingInst *rst){
 	rst->cap = 0;
