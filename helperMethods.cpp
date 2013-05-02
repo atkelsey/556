@@ -91,13 +91,13 @@
 	 }
 	 theNet->croutes[0] = lorFlat;
  }
-/*
+
  int updateUtil(routingInst* rst) {//Returns total overflow
 	 int i, j, k, TOF, tempEdge;
 	 for (i = 0; i < rst->numNets; i++){
 		 for (j = 0; j < rst->nets[i].croutes[0].numSegs; j++){
 			 for(k = 0; k < rst->nets[i].croutes[0].segments.at(j).numEdges; k++){
-				 tempEdge = rst->nets[i].croutes[0].segments[j].edges[k];
+				 tempEdge = rst->nets[i].croutes[0].segments.at(j).edges.at(k);
 				 rst->edgeUtils[tempEdge]++;
 				 if (rst->edgeUtils[tempEdge] > rst->edgeCaps[tempEdge]){
 					 TOF++;
@@ -107,4 +107,4 @@
 	 }
 	 return TOF;
  }
-*/
+
