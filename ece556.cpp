@@ -171,8 +171,9 @@ int writeOutput(const char *outRouteFile, routingInst *rst){
 	for (int i = 0; i < rst->numNets; i++){
 		outFile << "n" << rst->nets[i].id << endl;
 		for (int j = 0; j < rst->nets[i].croutes->numSegs; j++){
-			outFile << "(" << rst->nets[i].croutes->segments[j].p1.x << "," << rst->nets[i].croutes->segments[j].p1.y << ")-";
-			outFile << "(" << rst->nets[i].croutes->segments[j].p2.x << "," << rst->nets[i].croutes->segments[j].p2.y << ")" << endl;
+			segment seg = rst->nets[i].croutes->segments.at(j);
+			outFile << "(" << seg.p1.x << "," << seg.p1.y << ")-";
+			outFile << "(" << seg.p2.x << "," << seg.p2.y << ")" << endl;
 		}
 		outFile << "!" << endl;
 	}
