@@ -37,9 +37,9 @@ using std::map;
  {
    point p1 ; 	/* start point of a segment */
    point p2 ; 	/* end point of a segment */
-   vector<point> segVector;
    int numEdges ; 	/* number of edges in the segment*/
-   int *edges ;  	/* array of edges representing the segment*/
+   //int *edges ;  	/* array of edges representing the segment*/
+   vector<int> edges;
 
  } segment ;
 
@@ -49,8 +49,10 @@ using std::map;
   */
   typedef struct
   {
+
+	vector<point> segments;
     int numSegs ;  	/* number of segments in a route*/
-    segment *segments ;  /* an array of segments (note, a segment may be flat, L-shaped or any other shape, based on your preference */
+    //segment *segments ;  /* an array of segments (note, a segment may be flat, L-shaped or any other shape, based on your preference */
 
   } route ;
 
