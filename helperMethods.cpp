@@ -44,7 +44,7 @@
 	 point temp;
 	 route lorFlat;
 	 lorFlat.numSegs = 0;
-	 lorFlat.segments = new segment[2*(theNet->numPins)];
+	 //lorFlat.segments = new segment[2*(theNet->numPins)];
 	 for (j = 1; j < theNet->numPins; j++){
 		 a = theNet->pins[j-1];
 		 b = theNet->pins[j];
@@ -60,12 +60,12 @@
 		 		 xSeg.p2.x = b.x;
 		 		 xSeg.p2.y = a.y;
 		 		 xSeg.numEdges = (b.x - a.x);
-		 		 xSeg.edges = new int[xSeg.numEdges];
+		 		 //xSeg.edges = new int[xSeg.numEdges];
 		 		 for (i = 0; i < xSeg.numEdges; i++){
-		 			 xSeg.edges[i] = getXEdge(a);
+		 			 xSeg.edges.push_back(getXEdge(a));
 		 			 a.x++;
 		 		 }
-		 		 lorFlat.segments[lorFlat.numSegs] = xSeg;
+		 		 lorFlat.segments.push_back(xSeg);
 		 		 lorFlat.numSegs++;
 		 	 }
 		 	 if (a.y != b.y){
@@ -80,23 +80,23 @@
 		 		 ySeg.p2.x = a.x;
 		 		 ySeg.p2.y = b.y;
 		 		 ySeg.numEdges = (b.y - a.y);
-		 		 ySeg.edges = new int[ySeg.numEdges];
+		 		 //ySeg.edges = new int[ySeg.numEdges];
 		 		 for (i = 0; i < ySeg.numEdges; i++){
-		 			 ySeg.edges[i] = getYEdge(a);
+		 			 ySeg.edges.push_back(getYEdge(a));
 		 			 a.y++;
 		 		 }
-		 		 lorFlat.segments[lorFlat.numSegs] = ySeg;
+		 		 lorFlat.segments.push_back(ySeg);
 		 		 lorFlat.numSegs++;
 		 	 }
 	 }
 	 theNet->croutes[0] = lorFlat;
  }
-
+/*
  int updateUtil(routingInst* rst) {//Returns total overflow
 	 int i, j, k, TOF, tempEdge;
 	 for (i = 0; i < rst->numNets; i++){
 		 for (j = 0; j < rst->nets[i].croutes[0].numSegs; j++){
-			 for(k = 0; k < rst->nets[i].croutes[0].segments[j].numEdges; k++){
+			 for(k = 0; k < rst->nets[i].croutes[0].segments.at(j).numEdges; k++){
 				 tempEdge = rst->nets[i].croutes[0].segments[j].edges[k];
 				 rst->edgeUtils[tempEdge]++;
 				 if (rst->edgeUtils[tempEdge] > rst->edgeCaps[tempEdge]){
@@ -107,4 +107,4 @@
 	 }
 	 return TOF;
  }
-
+*/
