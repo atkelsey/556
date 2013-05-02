@@ -9,6 +9,9 @@
 #include <stdlib.h>
 #include <algorithm>
 #include <map>
+#include <vector>
+using std::vector;
+using std::map;
 
 
 #ifndef ECE556_H
@@ -34,7 +37,7 @@
  {
    point p1 ; 	/* start point of a segment */
    point p2 ; 	/* end point of a segment */
-
+   vector<point> segVector;
    int numEdges ; 	/* number of edges in the segment*/
    int *edges ;  	/* array of edges representing the segment*/
 
