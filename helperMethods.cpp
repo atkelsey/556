@@ -103,6 +103,7 @@
 	 }
  }
 
+
  int updateUtil(routingInst* rst) {//Returns total overflow
 	 int i, j, k, TOF, tempEdge, netWeight;
 	 TOF = 0;
@@ -132,7 +133,25 @@
 	 }
 	 return TOF;
  }
- void aStarRoute (routingInst* rst){
-
+ /*Updates the weights after a RRR cycle and resets the priority queue.
+  */
+ int resetEdge(routingInst* rst){
+	 int i, j, k;
+	 //might not need this
+	 delete [] rst->edgeUtils;
+	 int* edgeUtils = new int[rst->numEdges];
+	 rst->pQueNets.empty();
+	 std::fill(edgeUtils, edgeUtils + rst->numEdges, 0);
+	 //updates the edge Utils for all Nets
+	 for (i = 0; i < rst->numNets; i++){
+		 for (j = 0; j < rst->nets[i].croutes[0].numSegs; j++){
+			 for (k = 0; k < rst->nets[i].croutes[0].segments.at(j).numEdges; k++){
+				 int edge = rst->nets[i].croutes[0].segments.at(j).edges.at(k);
+				 edgeUtils[edge]++;
+			 }
+		 }
+	 }
+	 rst->edgeUtils = edgeUtils;
+	 return updateUtil(rst);
  }
 
