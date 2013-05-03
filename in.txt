@@ -1,9 +1,10 @@
-grid 3 3
+grid 6 6
 capacity 1
 num net 2
-n0 2 
-0  2
+n0 3 
+6  6
 1  1
+4  4
 n1 3
 0  0
 2  2

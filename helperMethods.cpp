@@ -38,13 +38,6 @@
 
  void getLRoute(net *theNet) {
 	 int i, j;
-	 for (i = 0; i < theNet->numPins; i++){
-		 theNet->pins[i].locScore = (theNet->median.x - theNet->pins->x)
-				 + 0.5*abs(theNet->median.y - theNet->pins->y);
-	 }
-	 for (i = 0; i < theNet->numPins; i++){
-		 theNet->pQuePins.push(theNet->pins[i]);
-	 }
 	 theNet->croutes = new route[1];
 	 point a;//the smaller coordinate
 	 point b;//the larger coordinate
@@ -52,13 +45,9 @@
 	 route lorFlat;
 	 lorFlat.numSegs = 0;
 	 //lorFlat.segments = new segment[2*(theNet->numPins)];
-	 a = theNet->pQuePins.top();
-	 theNet->pins[0] = a;
-	 theNet->pQuePins.pop();
 	 for (j = 1; j < theNet->numPins; j++){
-		 b = theNet->pQuePins.top();
-		 theNet->pins[j] = b;
-		 theNet->pQuePins.pop();
+		 a = theNet->pins[j-1];
+		 b = theNet->pins[j];
 		 	 if (a.x != b.x){
 		 		 segment xSeg;
 		 		 if (a.x > b.x){
@@ -99,7 +88,6 @@
 		 		 lorFlat.segments.push_back(ySeg);
 		 		 lorFlat.numSegs++;
 		 	 }
-		a = b;
 	 }
 	 theNet->croutes[0] = lorFlat;
  }

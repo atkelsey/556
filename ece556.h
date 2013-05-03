@@ -72,8 +72,8 @@ using namespace std;
    point *pins ; 	/* array of pins (or terminals) of the net. */
    int numCRoutes ; 	/* number of (candidate) routes of the net. This may be equal to one (only one candidate route) in your implementation. */
    route *croutes ;	/* array of candidate routes of the net. */
-   point median ;
-   priority_queue<point, vector<point>, PointComparator> pQuePins;
+   //point median ;
+   //priority_queue<point, vector<point>, PointComparator> pQuePins;
 
   } net ;
 
