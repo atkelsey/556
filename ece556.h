@@ -161,6 +161,12 @@ int solveRouting(routingInst *rst);
 
  void aStarRoute (routingInst* rst);
 
+ void init(point S, point T,
+ 	 map<point, int> group,
+ 	 map<point, int> distance,
+ 	 map<point, int> score,
+ 	 map<point, point> parent);
+
  extern int xGridSize;
  extern int yGridSize;
 
