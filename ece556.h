@@ -72,11 +72,17 @@ using namespace std;
    point *pins ; 	/* array of pins (or terminals) of the net. */
    int numCRoutes ; 	/* number of (candidate) routes of the net. This may be equal to one (only one candidate route) in your implementation. */
    route *croutes ;	/* array of candidate routes of the net. */
+   int weight;
    //point median ;
    //priority_queue<point, vector<point>, PointComparator> pQuePins;
 
   } net ;
 
+  struct NetComparator {
+      bool operator() (const net& n1, const net& n2) {
+          return n1.weight > n2.weight; //calls your operator
+      }
+  };
   /**
   * A structure to represent the routing instance
   */
@@ -89,6 +95,7 @@ using namespace std;
 
    int numNets ;	/* number of nets */
    net *nets ;		/* array of nets */
+   priority_queue<net, vector<net>, NetComparator> pQueNets;
 
    int numEdges ; 	/* number of edges of the grid */
    int *edgeCaps; 	/* array of the actual edge capacities after considering for blockages */
@@ -149,7 +156,7 @@ int solveRouting(routingInst *rst);
 
  int updateUtil(routingInst* rst);
 
- void getLRoute(net *theNet);
+ void getLRoute(routingInst *rst);
 
  extern int xGridSize;
  extern int yGridSize;

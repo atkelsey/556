@@ -6,6 +6,7 @@ using namespace std;
 net * nets;
 point * pins;
 int *edge_caps;
+int *edge_Utils;
 int block = 0;
 int xGridSize;
 int yGridSize;
@@ -53,6 +54,7 @@ int readBenchmark(const char *fileName, routingInst *rst){
 				istringstream(token) >> rst->cap;
 
 				edge_caps = new int[rst->numEdges];
+				edge_Utils = new int[rst->numEdges];
 				std::fill(edge_caps, edge_caps + rst->numEdges, rst->cap);
 			//	cout << "capacity = " << rst->cap << endl;
 			}
@@ -124,6 +126,7 @@ int readBenchmark(const char *fileName, routingInst *rst){
 	}
 	rst->nets = nets;
 	rst->edgeCaps = edge_caps;
+	rst->edgeUtils = edge_Utils;
 /*	for (int i = 0; i < rst->numEdges ; i++){
 		cout << rst->edgeCaps[i] << "\t";
 	}
@@ -146,19 +149,21 @@ int solveRouting(routingInst *rst){
 	int i;
 	//int incAmount;
 	//incAmount = sizeof(net);
-	for (i = 0; i < rst->numNets; i++) {
-		//go through all nets and give a net assignment
-		cout << "routing " << i << "...\n";
-		getLRoute(&(rst->nets[i]));
-	}
+	getLRoute(rst);
+//	for (i = 0; i < rst->numNets; i++) {
+//		//go through all nets and give a net assignment
+//		cout << "routing " << i << "...\n";
+//		getLRoute(&(rst->nets[i]));
+//	}
 //	time_t startTime, elapsedTime;
 //	time(&startTime);
 //	int seconds = 0;
-	
+//
 //	while (seconds < (15*60)){ //main loop: add all end cases here (TOF is not increasing over multiple runs)
 //		//Compute edge weights
 //		//Order nets in the priority queue (highest vales are worst)
 //		//route each net UPdate edge util/weights
+//
 //
 //
 //
