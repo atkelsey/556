@@ -101,11 +101,11 @@
 		 }
 		 rst->nets[k].croutes[0] = lorFlat;
 	 }
-	 updateUtil(rst);
  }
 
  int updateUtil(routingInst* rst) {//Returns total overflow
 	 int i, j, k, TOF, tempEdge, netWeight;
+	 TOF = 0;
 	 for (i = 0; i < rst->numNets; i++){
 		 rst->nets[i].weight = 0;
 		 for (j = 0; j < rst->nets[i].croutes[0].numSegs; j++){
@@ -123,13 +123,16 @@
 					 netWeight = INT_MAX;
 					 rst->nets[i].weight = netWeight;
 				 }
-//				 if (rst->edgeUtils[tempEdge] > rst->edgeCaps[tempEdge]){
-//					 TOF++;
-//				 }
+				 if (rst->edgeUtils[tempEdge] > rst->edgeCaps[tempEdge]){
+					 TOF++;
+				 }
 			 }
 		 }
 		 rst->pQueNets.push(rst->nets[i]);
 	 }
 	 return TOF;
+ }
+ void aStarRoute (routingInst* rst){
+
  }
 

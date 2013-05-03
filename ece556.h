@@ -159,6 +159,8 @@ int solveRouting(routingInst *rst);
 
  void getLRoute(routingInst *rst);
 
+ void aStarRoute (routingInst* rst);
+
  extern int xGridSize;
  extern int yGridSize;
 
