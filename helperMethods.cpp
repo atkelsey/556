@@ -64,8 +64,10 @@
 					 xSeg.numEdges = (b.x - a.x);
 					 //xSeg.edges = new int[xSeg.numEdges];
 					 for (i = 0; i < xSeg.numEdges; i++){
+						 //cout << a.x << "," << a.y << "  " << b.x << "," << b.y << "\n";
 						 currEdge = getXEdge(a);
-						 rst->edgeUtils[i]++;
+						 //cout << "edge number x " << currEdge << "\n";
+						 rst->edgeUtils[currEdge]++;
 						 xSeg.edges.push_back(currEdge);
 						 a.x++;
 					 }
@@ -86,8 +88,10 @@
 					 ySeg.numEdges = (b.y - a.y);
 					 //ySeg.edges = new int[ySeg.numEdges];
 					 for (i = 0; i < ySeg.numEdges; i++){
+						 //cout << a.x << "," << a.y << "  " << b.x << "," << b.y << "\n";
 						 currEdge = getYEdge(a);
-						 //rst->edgeUtils[i]++;
+						 //cout << "edge number y " << currEdge << "\n";
+						 rst->edgeUtils[currEdge]++;
 						 ySeg.edges.push_back(currEdge);
 						 a.y++;
 					 }
@@ -108,11 +112,20 @@
 			 netWeight = 0;
 			 for(k = 0; k < rst->nets[i].croutes[0].segments.at(j).numEdges; k++){
 				 tempEdge = rst->nets[i].croutes[0].segments.at(j).edges.at(k);
-				 netWeight = netWeight + (rst->edgeUtils[tempEdge] / rst->edgeCaps[tempEdge]);
-				 rst->nets[i].weight = rst->nets[i].weight + netWeight;
-				 if (rst->edgeUtils[tempEdge] > rst->edgeCaps[tempEdge]){
-					 TOF++;
+				 //cout << "Cap " << rst->edgeCaps[tempEdge] << " Util "<< rst->edgeUtils[tempEdge] << "\n";
+				 if (rst->edgeCaps[tempEdge] != 0){
+					 netWeight = netWeight + (rst->edgeUtils[tempEdge] / rst->edgeCaps[tempEdge]);
+					 rst->nets[i].weight = rst->nets[i].weight + netWeight;
+					 //cout << "weight " << rst->nets[i].weight << "\n";
 				 }
+				 else {
+					 //cout << "BOOM \n";
+					 netWeight = INT_MAX;
+					 rst->nets[i].weight = netWeight;
+				 }
+//				 if (rst->edgeUtils[tempEdge] > rst->edgeCaps[tempEdge]){
+//					 TOF++;
+//				 }
 			 }
 		 }
 		 rst->pQueNets.push(rst->nets[i]);
