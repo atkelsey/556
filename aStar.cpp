@@ -11,7 +11,12 @@
 	 map<point, point> parent;
 	 net currNet;
 	 point S, T;
-	 queue<point> group2;
+	  struct ScoreComparator {
+	      bool operator() (const point& p1, const point& p2) {
+	          return score[p1] > score[p2]; //calls your operator
+	      }
+	  };
+	 priority_queue<point, vector<point>, ScoreComparator> group2;
 	 for (i = 0; i < rst->numNets/2; i++){
 		 currNet = rst->pQueNets.top();
 		 rst->pQueNets.pop();

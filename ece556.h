@@ -161,6 +161,8 @@ int solveRouting(routingInst *rst);
 
  void aStarRoute (routingInst* rst);
 
+ int resetEdge(routingInst* rst);
+
  void init(point S, point T,
  	 map<point, int> group,
  	 map<point, int> distance,
