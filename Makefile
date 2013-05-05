@@ -25,9 +25,9 @@ CCLNFLAGS = -lm -pthread
 #  make execute  : to compile and execute.                         
 #------------------------------------------------------------    
 
-ROUTE.exe: main.o ece556.o helperMethods.o
+ROUTE.exe: main.o ece556.o helperMethods.o astartest.o
 	/bin/rm -f ROUTE.exe
-	$(CCC) $(LINKFLAGS) $(CCFLAGS) main.o ece556.o helperMethods.o $(CCLNFLAGS) -o ROUTE.exe
+	$(CCC) $(LINKFLAGS) $(CCFLAGS) main.o ece556.o helperMethods.o astartest.o $(CCLNFLAGS) -o ROUTE.exe
 
 main.o: main.cpp ece556.h 
 	/bin/rm -f main.o
@@ -40,6 +40,10 @@ ece556.o: ece556.cpp ece556.h
 helperMethods.o: ece556.h helperMethods.cpp
 	/bin/rm -f helperMethods.o
 	$(CCC) $(CCFLAGS) helperMethods.cpp -c
+	
+astartest.o: astartest.cpp ece556.h
+	/bin/rm -f astartest.o
+	$(CCC) $(CCFLAGS) astartest.cpp -c
 	
 clean:
 	/bin/rm -f *~ *.o ROUTE.exe 

@@ -162,5 +162,7 @@
 			 rst->edgeUtils[k]--;
 		 }
 	 }
+	 rst->nets[net].croutes[0].numSegs = 0;
+	 cout << "Ripping net: " << net << endl;
  }
 

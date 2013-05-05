@@ -33,6 +33,12 @@ using namespace std;
 		 else
 			 return (y < p2.y);
      };
+	 bool operator!=(const point_ p2) const{
+		 if(x != p2.x || y != p2.y)
+			 return true;
+		 else
+			 return false;
+     };
 
  public:
 	 int x ; /* x coordinate ( >=0 in the routing grid)*/
@@ -171,9 +177,11 @@ int solveRouting(routingInst *rst);
 
  void aStarRoute (routingInst* rst);
 
+ void RipNet(routingInst* rst, int netID);
+
  int resetEdge(routingInst* rst);
 
- void retrace (point A, routingInst* rst);
+ void retrace (point A, routingInst* rst, map<point, point> parent, int netID);
 
  void init(point S, point T,
  	 map<point, int> group,
