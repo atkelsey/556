@@ -23,7 +23,7 @@
 		 S = currNet.pins[0];
 		 for (j = 1; j < currNet.numPins; j++){
 			 T = currNet.pins[j];
-			 group2.push()
+			 group2.push();
 		 }
 	 }
  }

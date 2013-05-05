@@ -23,12 +23,22 @@ using namespace std;
  /**
   * A structure to represent a 3D Point.
   */
- typedef struct
+ typedef struct point_
  {
-   int x ; /* x coordinate ( >=0 in the routing grid)*/
-   int y ; /* y coordinate ( >=0 in the routing grid)*/
-   int locScore;
- } point ;
+	 bool operator<(const point_ p2) const{
+		 if(x < p2.x)
+			 return true;
+		 else if(x > p2.x)
+			 return false;
+		 else
+			 return (y < p2.y);
+     };
+
+ public:
+	 int x ; /* x coordinate ( >=0 in the routing grid)*/
+	 int y ; /* y coordinate ( >=0 in the routing grid)*/
+	 int locScore;
+ } point;
 
  struct PointComparator {
      bool operator() (const point& p1, const point& p2) {
