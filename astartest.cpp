@@ -24,6 +24,7 @@ void aStarRoute (routingInst* rst){
 	priority_queue<point, vector<point>, scoreComparison> astar_pq;
 	net currNet;
 	point S, T, u;
+	point * T_ptr = &T;
 
 	for (i = 0; i < rst->numNets/2; i++){
 		currNet = rst->pQueNets.top();
@@ -47,6 +48,7 @@ void aStarRoute (routingInst* rst){
 					if (((u.y + 1 ) < rst->gy) && (rst->edgeCaps[currEdge] > 0)){
 						//check goal or update queue
 						point v;
+						point * v_ptr = &v;
 						v.x = u.x;
 						v.y = u.y + 1;
 						tempDist = distance[u] + rst->edgeUtils[currEdge];
@@ -55,7 +57,7 @@ void aStarRoute (routingInst* rst){
 						else if ((2 != group[v]) || (distance[v] > tempDist)){
 							parent[v] = u;
 							distance[v] = tempDist;
-							score[v] = distance[v] + MD(V,T);
+							score[v] = distance[v] + manhattanDistance(v_ptr,T_ptr);
 							if (2 != group[v]){
 								astar_pq.push(v);
 							}
@@ -99,7 +101,7 @@ void init(point S, point T,
 	distance.insert(pair<point, int>(S, INT_MAX));
 	score.insert(pair<point, int>(S, INT_MAX));
 	group.insert(pair<point, int>(S, 1));
-	parent.insert(pair<point, point>(S, NULL));
+	//parent.insert(pair<point, point>(S, NULL));
 	distance.insert(pair<point, int>(T, 0));
 	score.insert(pair<point, int>(T, 0));
 }
