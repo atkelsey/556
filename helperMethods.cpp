@@ -155,3 +155,12 @@
 	 return updateUtil(rst);
  }
 
+ void RipNet(routingInst* rst, int net){
+	 for (int i = 0; i<rst->nets[net].croutes[0].numSegs; i++){
+		 for (int j = 0; j < rst->nets[net].croutes[0].segments.at(i).numEdges; j++){
+			int k = rst->nets[net].croutes[0].segments.at(i).edges.at(j);
+			 rst->edgeUtils[k]--;
+		 }
+	 }
+ }
+
