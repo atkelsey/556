@@ -173,6 +173,8 @@ int solveRouting(routingInst *rst);
 
  int resetEdge(routingInst* rst);
 
+ void retrace (point A, routingInst* rst);
+
  void init(point S, point T,
  	 map<point, int> group,
  	 map<point, int> distance,
