@@ -7,8 +7,8 @@ public:
 	scoreComparison(const bool& revparam= false)
 {reverse = revparam;}
 	bool operator() (const point &s1, const point &s2) const{
-		if (reverse) return (s1.locScore > s2.locScore);
-		return (s1.locScore < s2.locScore);
+		if (reverse) return (s1.locScore < s2.locScore);
+		return (s1.locScore > s2.locScore);
 	}
 	/*	int Score(const point& p1, const point& T){
 		int MD = abs(p1.x - T.x) + abs(p1.y - T.y);
@@ -26,15 +26,15 @@ void aStarRoute (routingInst* rst){
 	point * T_ptr = &T;
 	priority_queue<net, vector<net>, NetComparator> pQueNets;
 
-	for (i = 0; i < rst->numNets/2; i++){
-		priority_queue<point, vector<point>, scoreComparison> astar_pq;
+	for (i = 0; i < (rst->numNets * .02 ); i++){
 		currNet = rst->pQueNets.top();
 		RipNet(rst, currNet.id);
 		rst->pQueNets.pop();
-		S = currNet.pins[0];
 		for (j = 1; j < currNet.numPins; j++){
-			cout << "A Star pin: " << j << endl;
+			priority_queue<point, vector<point>, scoreComparison> astar_pq;
+			S = currNet.pins[j-1];
 			T = currNet.pins[j];
+			//cout << "A Star pin: " << S.x <<","<<S.y << "  " <<T.x << "," << T.y << endl;
 			init(S, group, distance, score, parent, rst);
 			astar_pq.push(S);
 			while (!astar_pq.empty()){
@@ -44,7 +44,7 @@ void aStarRoute (routingInst* rst){
 				astar_pq.pop();
 				group[u] = 3;
 				if (u.x == T.x && u.y == T.y){
-					retrace(u, rst, parent, currNet.id);
+					retrace(S, u, rst, parent, currNet.id);
 					break;
 				}
 				else {
@@ -63,15 +63,14 @@ void aStarRoute (routingInst* rst){
 							//continue to next
 						}
 						else if ((2 != group[v]) || (distance[v] > tempDist)){
-
-							//cout << "initial grou" << group[v] << endl;
 							parent[v] = u;
 							distance[v] = tempDist;
 							score[v] = distance[v] + manhattanDistance(v_ptr,T_ptr);
 							v.locScore = score[v];
+							//cout << v.x << "," << v.y << " local score: " << v.locScore <<endl;
 							if (2 != group[v]){
 								group[v] = 2;
-								cout << group[v] << endl;
+								//cout << group[v] << endl;
 								astar_pq.push(v);
 							}
 							else {
@@ -91,6 +90,7 @@ void aStarRoute (routingInst* rst){
 						point * v_ptr = &v;
 						v.x = u.x + 1;
 						v.y = u.y;
+						//cout << v.x << "," << v.y << endl;
 						tempDist = distance[u] + rst->edgeUtils[currEdge];
 						if ((3 == group[v]) && (distance[v] <= tempDist)){
 							//continue to next
@@ -100,6 +100,7 @@ void aStarRoute (routingInst* rst){
 							distance[v] = tempDist;
 							score[v] = distance[v] + manhattanDistance(v_ptr,T_ptr);
 							v.locScore = score[v];
+							//cout << v.x << "," << v.y << " local score: " << v.locScore <<endl;
 							if (2 != group[v]){
 								group[v] = 2;
 								astar_pq.push(v);
@@ -123,6 +124,7 @@ void aStarRoute (routingInst* rst){
 						point * v_ptr = &v;
 						v.x = u.x;
 						v.y = u.y - 1;
+						//cout << v.x << "," << v.y << endl;
 						tempDist = distance[u] + rst->edgeUtils[currEdge];
 						if ((3 == group[v]) && (distance[v] <= tempDist)){
 							//continue to next
@@ -132,6 +134,7 @@ void aStarRoute (routingInst* rst){
 							distance[v] = tempDist;
 							score[v] = distance[v] + manhattanDistance(v_ptr,T_ptr);
 							v.locScore = score[v];
+							//cout << v.x << "," << v.y << " local score: " << v.locScore <<endl;
 							if (2 != group[v]){
 								group[v] = 2;
 								astar_pq.push(v);
@@ -139,6 +142,7 @@ void aStarRoute (routingInst* rst){
 							else {
 								priority_queue<point, vector<point>, scoreComparison> tempAstar_pq;
 								while (!astar_pq.empty()){
+									cout << astar_pq.size();
 									tempAstar_pq.push(astar_pq.top());
 									astar_pq.pop();
 								}
@@ -155,6 +159,7 @@ void aStarRoute (routingInst* rst){
 						point * v_ptr = &v;
 						v.x = u.x - 1;
 						v.y = u.y;
+						//cout << v.x << "," << v.y << endl;
 						tempDist = distance[u] + rst->edgeUtils[currEdge];
 						if ((3 == group[v]) && (distance[v] <= tempDist)){
 						}
@@ -163,6 +168,7 @@ void aStarRoute (routingInst* rst){
 							distance[v] = tempDist;
 							score[v] = distance[v] + manhattanDistance(v_ptr,T_ptr);
 							v.locScore = score[v];
+							//cout << v.x << "," << v.y << " local score: " << v.locScore <<endl;
 							if (2 != group[v]){
 								group[v] = 2;
 								astar_pq.push(v);
@@ -206,7 +212,7 @@ void aStarRoute (routingInst* rst){
 	}
 	rst->pQueNets = pQueNets;
 }
-void retrace (point A, routingInst* rst, map<point, point> parent, int netID){
+void retrace (point S, point A, routingInst* rst, map<point, point> parent, int netID){
 	cout << "Retracing net: " << netID << endl;
 	//trace back from A to parent to parent etc, form segments, and nets,
 	//push to priority queue;
@@ -217,27 +223,28 @@ void retrace (point A, routingInst* rst, map<point, point> parent, int netID){
 	int currEdge;
 	seg.p1 = A;
 	prev = A;
-	while (rent != A){
+	while (S != A){
 		currEdge = getEdge(&rent, &A);
 		if ((rent.y != seg.p1.y) && (rent.x != seg.p1.x)){
-			seg.p2 = prev;
+			seg.p2 = A;
 			rst->nets[netID].croutes[0].numSegs++;
 			rst->nets[netID].croutes[0].segments.push_back(seg);
 			//store seg
-			seg.p1 = prev;
+			seg.p1 = A;
 			seg.numEdges = 1;
-			seg.edges.push_back(currEdge);
-			rst->edgeUtils[currEdge]++;
 		}
 		else {
-			seg.edges.push_back(currEdge);
 			seg.numEdges++;
-			rst->edgeUtils[currEdge]++;
-			prev = A;
-			A = rent;
-			rent = parent[A];
 		}
+		seg.edges.push_back(currEdge);
+		rst->edgeUtils[currEdge]++;
+		prev = A;
+		A = rent;
+		rent = parent[A];
 	}
+	seg.p2 = prev;
+	rst->nets[netID].croutes[0].numSegs++;
+	rst->nets[netID].croutes[0].segments.push_back(seg);
 }
 void init(point S,
 		map<point, int> group,
@@ -257,6 +264,8 @@ void init(point S,
 			parent.insert(pair<point, point>(temp, temp));
 		}
 	}
+	//cout << "Parent S" << parent[S].x << parent[S].y << endl;
+	//cout << "S" << S.x << S.y << endl;
 	distance[S] = 0;
 	score[S] = 0;
 	S.locScore = 0;

@@ -34,7 +34,7 @@ using namespace std;
 			 return (y < p2.y);
      };
 	 bool operator!=(const point_ p2) const{
-		 if(x != p2.x || y != p2.y)
+		 if((x != p2.x) || (y != p2.y))
 			 return true;
 		 else
 			 return false;
@@ -181,7 +181,7 @@ int solveRouting(routingInst *rst);
 
  int resetEdge(routingInst* rst);
 
- void retrace (point A, routingInst* rst, map<point, point> parent, int netID);
+ void retrace (point S, point T, routingInst* rst, map<point, point> parent, int netID);
 
  void init(point S,
  	 map<point, int> group,

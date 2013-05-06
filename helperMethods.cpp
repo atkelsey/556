@@ -39,7 +39,7 @@
  void getLRoute(routingInst *rst) {
 	 int i, j, currEdge, k;
 	 for (k = 0; k < rst->numNets; k++) {
-		 cout << "routing " << k << "...\n";
+		 //cout << "routing " << k << "...\n";
 		 rst->nets[k].croutes = new route[1];
 		 point a;//the smaller coordinate
 		 point b;//the larger coordinate
