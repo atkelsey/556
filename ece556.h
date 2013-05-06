@@ -39,6 +39,13 @@ using namespace std;
 		 else
 			 return false;
      };
+	 bool operator==(const point_ p2) const{
+		 if((x == p2.x) && (y == p2.y))
+			 return true;
+		 else
+			 return false;
+     };
+
 
  public:
 	 int x ; /* x coordinate ( >=0 in the routing grid)*/
