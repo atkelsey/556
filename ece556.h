@@ -25,6 +25,12 @@ using namespace std;
   */
  typedef struct point_
  {
+
+ public:
+	 int x ; /* x coordinate ( >=0 in the routing grid)*/
+	 int y ; /* y coordinate ( >=0 in the routing grid)*/
+	 int locScore;
+
 	 bool operator<(const point_ p2) const{
 		 if(x < p2.x)
 			 return true;
@@ -32,25 +38,19 @@ using namespace std;
 			 return false;
 		 else
 			 return (y < p2.y);
-     };
+	 };
 	 bool operator!=(const point_ p2) const{
 		 if((x != p2.x) || (y != p2.y))
 			 return true;
 		 else
 			 return false;
      };
-	 bool operator==(const point_ p2) const{
-		 if((x == p2.x) && (y == p2.y))
-			 return true;
-		 else
-			 return false;
-     };
-
-
- public:
-	 int x ; /* x coordinate ( >=0 in the routing grid)*/
-	 int y ; /* y coordinate ( >=0 in the routing grid)*/
-	 int locScore;
+//	 bool operator==(const point& p2) const{
+//		 if((this->x == p2.x) && (this->y == p2.y))
+//			 return true;
+//		 else
+//			 return false;
+//     };
  } point;
 
  struct PointComparator {
