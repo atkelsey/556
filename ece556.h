@@ -183,11 +183,11 @@ int solveRouting(routingInst *rst);
 
  void retrace (point A, routingInst* rst, map<point, point> parent, int netID);
 
- void init(point S, point T,
+ void init(point S,
  	 map<point, int> group,
  	 map<point, int> distance,
  	 map<point, int> score,
- 	 map<point, point> parent);
+ 	 map<point, point> parent, routingInst *rst);
 
  extern int xGridSize;
  extern int yGridSize;

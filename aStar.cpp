@@ -21,13 +21,13 @@ void aStarRoute (routingInst* rst){
 	map<point, int> distance;
 	map<point, int> score;
 	map<point, point> parent;
-	priority_queue<point, vector<point>, scoreComparison> astar_pq;
 	net currNet;
 	point S, T, u;
 	point * T_ptr = &T;
 	priority_queue<net, vector<net>, NetComparator> pQueNets;
 
 	for (i = 0; i < rst->numNets/2; i++){
+		priority_queue<point, vector<point>, scoreComparison> astar_pq;
 		currNet = rst->pQueNets.top();
 		RipNet(rst, currNet.id);
 		rst->pQueNets.pop();
@@ -35,13 +35,17 @@ void aStarRoute (routingInst* rst){
 		for (j = 1; j < currNet.numPins; j++){
 			cout << "A Star pin: " << j << endl;
 			T = currNet.pins[j];
-			init(S, T, group, distance, score, parent, rst);
+			init(S, group, distance, score, parent, rst);
 			astar_pq.push(S);
 			while (!astar_pq.empty()){
 				u = astar_pq.top();
+				//cout << u.x << " , " << u.y << endl;
+				//cout << astar_pq.size() << endl;
 				astar_pq.pop();
+				group[u] = 3;
 				if (u.x == T.x && u.y == T.y){
 					retrace(u, rst, parent, currNet.id);
+					break;
 				}
 				else {
 					int currEdge;
@@ -55,14 +59,19 @@ void aStarRoute (routingInst* rst){
 						v.x = u.x;
 						v.y = u.y + 1;
 						tempDist = distance[u] + rst->edgeUtils[currEdge];
-						if ((3 == group[v]) && (distance[v] < tempDist)){
+						if ((3 == group[v]) && (distance[v] <= tempDist)){
+							//continue to next
 						}
 						else if ((2 != group[v]) || (distance[v] > tempDist)){
+
+							//cout << "initial grou" << group[v] << endl;
 							parent[v] = u;
 							distance[v] = tempDist;
 							score[v] = distance[v] + manhattanDistance(v_ptr,T_ptr);
 							v.locScore = score[v];
 							if (2 != group[v]){
+								group[v] = 2;
+								cout << group[v] << endl;
 								astar_pq.push(v);
 							}
 							else {
@@ -83,7 +92,8 @@ void aStarRoute (routingInst* rst){
 						v.x = u.x + 1;
 						v.y = u.y;
 						tempDist = distance[u] + rst->edgeUtils[currEdge];
-						if ((3 == group[v]) && (distance[v] < tempDist)){
+						if ((3 == group[v]) && (distance[v] <= tempDist)){
+							//continue to next
 						}
 						else if ((2 != group[v]) || (distance[v] > tempDist)){
 							parent[v] = u;
@@ -91,6 +101,7 @@ void aStarRoute (routingInst* rst){
 							score[v] = distance[v] + manhattanDistance(v_ptr,T_ptr);
 							v.locScore = score[v];
 							if (2 != group[v]){
+								group[v] = 2;
 								astar_pq.push(v);
 							}
 							else {
@@ -113,7 +124,8 @@ void aStarRoute (routingInst* rst){
 						v.x = u.x;
 						v.y = u.y - 1;
 						tempDist = distance[u] + rst->edgeUtils[currEdge];
-						if ((3 == group[v]) && (distance[v] < tempDist)){
+						if ((3 == group[v]) && (distance[v] <= tempDist)){
+							//continue to next
 						}
 						else if ((2 != group[v]) || (distance[v] > tempDist)){
 							parent[v] = u;
@@ -121,6 +133,7 @@ void aStarRoute (routingInst* rst){
 							score[v] = distance[v] + manhattanDistance(v_ptr,T_ptr);
 							v.locScore = score[v];
 							if (2 != group[v]){
+								group[v] = 2;
 								astar_pq.push(v);
 							}
 							else {
@@ -143,7 +156,7 @@ void aStarRoute (routingInst* rst){
 						v.x = u.x - 1;
 						v.y = u.y;
 						tempDist = distance[u] + rst->edgeUtils[currEdge];
-						if ((3 == group[v]) && (distance[v] < tempDist)){
+						if ((3 == group[v]) && (distance[v] <= tempDist)){
 						}
 						else if ((2 != group[v]) || (distance[v] > tempDist)){
 							parent[v] = u;
@@ -151,6 +164,7 @@ void aStarRoute (routingInst* rst){
 							score[v] = distance[v] + manhattanDistance(v_ptr,T_ptr);
 							v.locScore = score[v];
 							if (2 != group[v]){
+								group[v] = 2;
 								astar_pq.push(v);
 							}
 							else {
@@ -160,21 +174,21 @@ void aStarRoute (routingInst* rst){
 									astar_pq.pop();
 								}
 								astar_pq = tempAstar_pq;
-//								priority_queue<point, vector<point>, scoreComparison> tempAstar_pq;
-//								while (!astar_pq.empty() && astar_pq.top() != v){
-//									tempAstar_pq.push(astar_pq.top());
-//									astar_pq.pop();
-//								}
-//								if (astar_pq.top() == v) {
-//									tempAstar_pq.push(astar_pq.top());
-//									astar_pq = tempAstar_pq;
-//								}
-//								else {
-//									while (!tempAstar_pq.empty()){
-//										astar_pq.push(tempAstar_pq.top());
-//										tempAstar_pq.pop();
-//									}
-//								}
+								//								priority_queue<point, vector<point>, scoreComparison> tempAstar_pq;
+								//								while (!astar_pq.empty() && astar_pq.top() != v){
+								//									tempAstar_pq.push(astar_pq.top());
+								//									astar_pq.pop();
+								//								}
+								//								if (astar_pq.top() == v) {
+								//									tempAstar_pq.push(astar_pq.top());
+								//									astar_pq = tempAstar_pq;
+								//								}
+								//								else {
+								//									while (!tempAstar_pq.empty()){
+								//										astar_pq.push(tempAstar_pq.top());
+								//										tempAstar_pq.pop();
+								//									}
+								//								}
 								//Resort the queue to reflect updated score of V
 								//update score of V
 							}
@@ -193,7 +207,7 @@ void aStarRoute (routingInst* rst){
 	rst->pQueNets = pQueNets;
 }
 void retrace (point A, routingInst* rst, map<point, point> parent, int netID){
-	 cout << "Retracing net: " << netID << endl;
+	cout << "Retracing net: " << netID << endl;
 	//trace back from A to parent to parent etc, form segments, and nets,
 	//push to priority queue;
 	point rent = parent[A];
@@ -225,7 +239,7 @@ void retrace (point A, routingInst* rst, map<point, point> parent, int netID){
 		}
 	}
 }
-void init(point S, point T,
+void init(point S,
 		map<point, int> group,
 		map<point, int> distance,
 		map<point, int> score,
@@ -237,15 +251,14 @@ void init(point S, point T,
 			temp.x = i;
 			temp.y = j;
 			group.insert(pair<point, int>(temp, 1));
+			distance.insert(pair<point, int>(temp, INT_MAX));
+			temp.locScore = INT_MAX;
+			score.insert(pair<point, int>(temp, INT_MAX));
+			parent.insert(pair<point, point>(temp, temp));
 		}
 	}
-	distance.insert(pair<point, int>(S, INT_MAX));
-	score.insert(pair<point, int>(S, INT_MAX));
-	S.locScore = INT_MAX;
-	//group.insert(pair<point, int>(S, 1));
-	parent.insert(pair<point, point>(S, S));
-	distance.insert(pair<point, int>(T, 0));
-	score.insert(pair<point, int>(T, 0));
-	T.locScore = 0;
+	distance[S] = 0;
+	score[S] = 0;
+	S.locScore = 0;
 }
 
