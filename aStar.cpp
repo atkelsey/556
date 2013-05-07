@@ -268,7 +268,7 @@ void aStarRoute (routingInst* rst){
 	rst->pQueNets = pQueNets;
 }
 void retrace (point S, point A, routingInst* rst, map<point, point> *parent, int netID){
-//	cout << "Retracing net: " << netID << endl;
+	cout << "Retracing net: " << netID << endl;
 	//trace back from A to parent to parent etc, form segments, and nets,
 	//push to priority queue;
 	point rent = (*parent)[A];

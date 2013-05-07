@@ -104,7 +104,7 @@ using namespace std;
 
   struct NetComparator {
       bool operator() (const net& n1, const net& n2) {
-          return n1.weight > n2.weight; //calls your operator
+          return n1.weight < n2.weight; //calls your operator
       }
   };
   /**
