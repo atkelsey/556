@@ -23,7 +23,7 @@ void aStarRoute (routingInst* rst){
 	map<point, point> parent;
 	priority_queue<net, vector<net>, NetComparator> pQueNets;
 
-	for (i = 0; i < (rst->numNets * .02 ); i++){
+	for (i = 0; i < (rst->numNets * .00002 ); i++){
 		net currNet;
 		currNet = rst->pQueNets.top();
 		RipNet(rst, currNet.id);
@@ -77,7 +77,7 @@ void aStarRoute (routingInst* rst){
 					int tempDist;
 					point modifier;
 					currEdge = getYEdge(u);
-					if (((u.y + 1 ) < rst->gy) && (rst->edgeCaps[currEdge] > 0)){
+					if (((u.y + 1 ) < rst->gy)/*&& (rst->edgeCaps[currEdge] > 0)*/){
 						//check goal or update queue
 						point v;
 						point * v_ptr = &v;
@@ -116,7 +116,7 @@ void aStarRoute (routingInst* rst){
 						}
 					}
 					currEdge = getXEdge(u);
-					if (((u.x + 1 ) < rst->gx) && (rst->edgeCaps[currEdge] > 0)){
+					if (((u.x + 1 ) < rst->gx)/* && (rst->edgeCaps[currEdge] > 0)*/){
 						//check goal or update queue
 						point v;
 						point * v_ptr = &v;
@@ -156,7 +156,7 @@ void aStarRoute (routingInst* rst){
 					modifier = u;
 					modifier.y--;
 					currEdge = getYEdge(modifier);
-					if ((u.y > 0) && (rst->edgeCaps[currEdge] > 0)){
+					if ((u.y > 0)/* && (rst->edgeCaps[currEdge] > 0)*/){
 						//check goal or update queue
 						point v;
 						point * v_ptr = &v;
@@ -197,7 +197,7 @@ void aStarRoute (routingInst* rst){
 					modifier.x--;
 					currEdge = getXEdge(modifier);
 					//cout << rst->edgeCaps[currEdge] << endl;
-					if ((u.x > 0) && (rst->edgeCaps[currEdge] > 0)){
+					if ((u.x > 0)/* && (rst->edgeCaps[currEdge] > 0)*/){
 						//check goal or update queue
 						point v;
 						point * v_ptr = &v;
@@ -264,7 +264,7 @@ void aStarRoute (routingInst* rst){
 	rst->pQueNets = pQueNets;
 }
 void retrace (point S, point A, routingInst* rst, map<point, point> parent, int netID){
-	cout << "Retracing net: " << netID << endl;
+//	cout << "Retracing net: " << netID << endl;
 	//trace back from A to parent to parent etc, form segments, and nets,
 	//push to priority queue;
 	point rent = parent[A];

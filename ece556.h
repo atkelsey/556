@@ -45,12 +45,12 @@ using namespace std;
 		 else
 			 return false;
      };
-//	 bool operator==(const point& p2) const{
-//		 if((this->x == p2.x) && (this->y == p2.y))
-//			 return true;
-//		 else
-//			 return false;
-//     };
+	 bool operator==(const point_ p2) const{
+		 if((x == p2.x) && (y == p2.y))
+			 return true;
+		 else
+			 return false;
+     };
  } point;
 
  struct PointComparator {
