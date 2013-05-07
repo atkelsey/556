@@ -168,7 +168,7 @@ int writeOutput(const char *outRouteFile, routingInst *rst){
 		outFile.close();
 		return 0;
 	}
-	//remove redundant segments
+	/*//remove redundant segments
 	for (int i = 0; i < rst->numNets; i++){
 			for (int j = 0; j < rst->nets[i].croutes->numSegs; j++){
 				point p1 = rst->nets[i].croutes->segments.at(j).p1;
@@ -194,7 +194,7 @@ int writeOutput(const char *outRouteFile, routingInst *rst){
 					}
 				}
 			}
-	}
+	}*/
 
 
 	for (int i = 0; i < rst->numNets; i++){
