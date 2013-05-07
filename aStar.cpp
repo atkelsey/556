@@ -23,7 +23,7 @@ void aStarRoute (routingInst* rst){
 	map<point, point> parent;
 	priority_queue<net, vector<net>, NetComparator> pQueNets;
 
-	for (i = 0; i < (rst->numNets * .00005 ); i++){
+	for (i = 0; i < (rst->numNets * .0002 ); i++){
 		net currNet;
 		currNet = rst->pQueNets.top();
 		RipNet(rst, currNet.id);
@@ -37,6 +37,10 @@ void aStarRoute (routingInst* rst){
 			T = currNet.pins[j];
 			//cout << "A Star pin: " << S.x <<","<<S.y << "  " <<T.x << "," << T.y << endl;
 
+			parent.clear();
+			score.clear();
+			distance.clear();
+			group.clear();
 
 			// initialize the maps
 			for (int e = 0; e < rst->gx; e++){
@@ -69,7 +73,7 @@ void aStarRoute (routingInst* rst){
 					while (!astar_pq.empty()){
 						astar_pq.pop();
 					}
-					retrace(S, u, rst, parent, currNet.id);
+					retrace(S, u, rst, &parent, currNet.id);
 					break;
 				}
 				else {
@@ -263,11 +267,11 @@ void aStarRoute (routingInst* rst){
 	}
 	rst->pQueNets = pQueNets;
 }
-void retrace (point S, point A, routingInst* rst, map<point, point> parent, int netID){
+void retrace (point S, point A, routingInst* rst, map<point, point> *parent, int netID){
 //	cout << "Retracing net: " << netID << endl;
 	//trace back from A to parent to parent etc, form segments, and nets,
 	//push to priority queue;
-	point rent = parent[A];
+	point rent = (*parent)[A];
 	point prev;
 	segment seg;
 	seg.numEdges = 0;
@@ -291,9 +295,9 @@ void retrace (point S, point A, routingInst* rst, map<point, point> parent, int 
 		rst->edgeUtils[currEdge]++;
 		prev = A;
 		A = rent;
-		rent = parent[A];
+		rent = (*parent)[A];
 	}
-	seg.p2 = prev;
+	seg.p2 = A;
 	rst->nets[netID].croutes[0].numSegs++;
 	rst->nets[netID].croutes[0].segments.push_back(seg);
 }

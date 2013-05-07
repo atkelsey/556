@@ -188,7 +188,7 @@ int solveRouting(routingInst *rst);
 
  int resetEdge(routingInst* rst);
 
- void retrace (point S, point T, routingInst* rst, map<point, point> parent, int netID);
+ void retrace (point S, point T, routingInst* rst, map<point, point> *parent, int netID);
 
  void init(point *S,
  	 map<point, int> *group,
