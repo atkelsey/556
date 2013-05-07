@@ -149,8 +149,13 @@ int solveRouting(routingInst *rst){
 	time_t startTime, elapsedTime;
 	time(&startTime);
 	int seconds = 0;
+<<<<<<< HEAD
 	updateUtil(rst);
 	while (seconds < (60)){ //main loop: add all end cases here (TOF is not increasing over multiple runs)
+=======
+
+	while (seconds < (.1*60)){ //main loop: add all end cases here (TOF is not increasing over multiple runs)
+>>>>>>> 50680a8730712747a6f682cec2e25ec9010ef30c
 		//Compute edge weights and order nets in the priority queue (highest vales are worst)
 
 		//route each net UPdate edge util/weights
