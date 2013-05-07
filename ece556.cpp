@@ -168,35 +168,6 @@ int writeOutput(const char *outRouteFile, routingInst *rst){
 		outFile.close();
 		return 0;
 	}
-	/*//remove redundant segments
-	for (int i = 0; i < rst->numNets; i++){
-			for (int j = 0; j < rst->nets[i].croutes->numSegs; j++){
-				point p1 = rst->nets[i].croutes->segments.at(j).p1;
-				point p2 = rst->nets[i].croutes->segments.at(j).p2;
-				for (int k = 0; k < j; k++){
-					if((rst->nets[i].croutes->segments.at(k).p1 == p1)&&(rst->nets[i].croutes->segments.at(k).p2 == p2)){
-						rst->nets[i].croutes->segments.erase(rst->nets[i].croutes->segments.begin()+k);
-						rst->nets[i].croutes->numSegs--;
-					}
-					else if((rst->nets[i].croutes->segments.at(k).p2 == p1)&&(rst->nets[i].croutes->segments.at(k).p1 == p2)){
-						rst->nets[i].croutes->segments.erase(rst->nets[i].croutes->segments.begin()+k);
-						rst->nets[i].croutes->numSegs--;
-					}
-				}
-				for (int k = j+1; k < rst->nets[i].croutes->numSegs; k++){
-					if((rst->nets[i].croutes->segments.at(k).p1 == p1)&&(rst->nets[i].croutes->segments.at(k).p2 == p2)){
-						rst->nets[i].croutes->segments.erase(rst->nets[i].croutes->segments.begin()+k);
-						rst->nets[i].croutes->numSegs--;
-					}
-					else if((rst->nets[i].croutes->segments.at(k).p2 == p1)&&(rst->nets[i].croutes->segments.at(k).p1 == p2)){
-						rst->nets[i].croutes->segments.erase(rst->nets[i].croutes->segments.begin()+k);
-						rst->nets[i].croutes->numSegs--;
-					}
-				}
-			}
-	}*/
-
-
 	for (int i = 0; i < rst->numNets; i++){
 		outFile << "n" << rst->nets[i].id << endl;
 		for (int j = 0; j < rst->nets[i].croutes->numSegs; j++){

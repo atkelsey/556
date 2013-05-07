@@ -121,7 +121,7 @@
 				 }
 				 else {
 					 //cout << "BOOM \n";
-					 netWeight = INT_MAX;
+					 netWeight = rst->cap;
 					 rst->nets[i].weight = netWeight;
 				 }
 				 if (rst->edgeUtils[tempEdge] > rst->edgeCaps[tempEdge]){
@@ -160,8 +160,10 @@
 		 for (int j = 0; j < rst->nets[net].croutes[0].segments.at(i).numEdges; j++){
 			int k = rst->nets[net].croutes[0].segments.at(i).edges.at(j);
 			 rst->edgeUtils[k]--;
+
 		 }
 	 }
+	 rst->nets[net].croutes[0].segments.clear();
 	 rst->nets[net].croutes[0].numSegs = 0;
 	 cout << "Ripping net: " << net << endl;
  }

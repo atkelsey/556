@@ -23,7 +23,7 @@ void aStarRoute (routingInst* rst){
 	map<point, point> parent;
 	priority_queue<net, vector<net>, NetComparator> pQueNets;
 
-	for (i = 0; i < (rst->numNets * .00002 ); i++){
+	for (i = 0; i < (rst->numNets * .00005 ); i++){
 		net currNet;
 		currNet = rst->pQueNets.top();
 		RipNet(rst, currNet.id);
