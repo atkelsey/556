@@ -110,6 +110,9 @@
 		 rst->pQueNets.pop();
 	 }
 	 TOF = 0;
+	 while (!rst->pQueNets.empty()){
+		 rst->pQueNets.pop();
+	 }
 	 for (i = 0; i < rst->numNets; i++){
 		 rst->nets[i].weight = 0;
 		 for (j = 0; j < rst->nets[i].croutes[0].numSegs; j++){
@@ -124,7 +127,7 @@
 				 }
 				 else {
 					 //cout << "BOOM \n";
-					 netWeight = rst->cap;
+					 netWeight = (rst->edgeUtils[tempEdge]/ rst->cap);
 					 rst->nets[i].weight = netWeight;
 				 }
 				 if (rst->edgeUtils[tempEdge] > rst->edgeCaps[tempEdge]){
