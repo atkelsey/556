@@ -106,6 +106,9 @@
 
  int updateUtil(routingInst* rst) {//Returns total overflow
 	 int i, j, k, TOF, tempEdge, netWeight;
+	 while (!(rst->pQueNets.empty())){
+		 rst->pQueNets.pop();
+	 }
 	 TOF = 0;
 	 for (i = 0; i < rst->numNets; i++){
 		 rst->nets[i].weight = 0;
