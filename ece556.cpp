@@ -146,17 +146,19 @@ int readBenchmark(const char *fileName, routingInst *rst){
 int solveRouting(routingInst *rst){
 	cout << "Started routing...\n";
 	getLRoute(rst);
-	time_t startTime, elapsedTime;
-	time(&startTime);
-	int seconds = 0;
+//	time_t startTime, elapsedTime;
+//	time(&startTime);
+//	int seconds = 0;
 	updateUtil(rst);
-	while (seconds < (60)){ //main loop: add all end cases here (TOF is not increasing over multiple runs)
-		//Compute edge weights and order nets in the priority queue (highest vales are worst)
-		//route each net UPdate edge util/weights
-		aStarRoute(rst);
-		resetEdge(rst);
-		seconds = time(&elapsedTime)-startTime;
-	}
+	aStarRoute(rst);
+	resetEdge(rst);
+//	while (seconds < (60)){ //main loop: add all end cases here (TOF is not increasing over multiple runs)
+//		//Compute edge weights and order nets in the priority queue (highest vales are worst)
+//		//route each net UPdate edge util/weights
+//		aStarRoute(rst);
+//		resetEdge(rst);
+//		seconds = time(&elapsedTime)-startTime;
+//	}
 	cout << "Completed routing\n";
 	return 1;
 }

@@ -22,8 +22,13 @@ void aStarRoute (routingInst* rst){
 	map<point, int> score;
 	map<point, point> parent;
 	priority_queue<net, vector<net>, NetComparator> pQueNets;
-
-	for (i = 0; i < 5/*(rst->numNets * .0002 )*/; i++){
+	time_t startTime, elapsedTime;
+	time(&startTime);
+	int seconds = 0;
+	updateUtil(rst);
+	aStarRoute(rst);
+	while (seconds < (15*60)){
+	//for (i = 0; i < 5/*(rst->numNets * .0002 )*/; i++){
 		net currNet;
 		currNet = rst->pQueNets.top();
 		RipNet(rst, currNet.id);
@@ -260,6 +265,7 @@ void aStarRoute (routingInst* rst){
 			}
 		}
 		pQueNets.push(currNet);
+		seconds = time(&elapsedTime)-startTime;
 	}
 	while (!rst->pQueNets.empty()){
 		pQueNets.push(rst->pQueNets.top());
