@@ -27,7 +27,7 @@ void aStarRoute (routingInst* rst){
 	int seconds = 0;
 	int maxWeight = rst->pQueNets.top().weight;
 	net currNet = rst->pQueNets.top();
-	while ((seconds < (15*60))&&(currNet.weight>=5*maxWeight/8)){
+	while ((seconds < (15*60))&&(currNet.weight>=2*maxWeight/3)){
 	//for (i = 0; i < 5/*(rst->numNets * .0002 )*/; i++){
 		currNet = rst->pQueNets.top();
 		//cout << currNet.weight;
