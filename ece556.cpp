@@ -96,15 +96,20 @@ int readBenchmark(const char *fileName, routingInst *rst){
 				if (pin_cnt == nets[net_cnt - 1].numPins){
 					vector<int> used;
 					point *tmp = new point[nets[net_cnt-1].numPins];
-					tmp[0] = pins[0];
 					//cout << pins[0].x << pins[0].y << endl;
-					used.push_back(0);
 					int loc = 0;
 
-					for(int j = 1; j < pin_cnt;j++) {
+					for(int j = 0; j < pin_cnt;j++) {
 							int min = 100000;
-							for (int i = 1; i < pin_cnt; i++) {
-								if ((manhattanDistance(&pins[i], &tmp[j-1]) < min)&&(find(used.begin(),used.end(), i)==used.end())) {
+							int min_init = 100000;
+							for (int i = 0; i < pin_cnt; i++) {
+								if (j == 0){
+									if ((pins[i].x + pins[i].y)<min_init){
+										min_init = pins[i].x + pins[i].y;
+										loc = i;
+									}
+								}
+								else if ((manhattanDistance(&pins[i], &tmp[j-1]) < min)&&(find(used.begin(),used.end(), i)==used.end())) {
 									min = manhattanDistance(&pins[i], &tmp[j-1]) ;
 									loc = i;
 								}
