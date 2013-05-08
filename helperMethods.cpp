@@ -50,7 +50,7 @@
 		 for (j = 1; j < rst->nets[k].numPins; j++){
 			 a = rst->nets[k].pins[j-1];
 			 b = rst->nets[k].pins[j];
-			 if ((j % 2) == 0){
+			 if (xOrY(a, b, rst)){
 				 if (a.x != b.x){
 					 segment xSeg;
 					 if (a.x > b.x){
@@ -152,6 +152,32 @@
 			 }
 		 }
 		 rst->nets[k].croutes[0] = lorFlat;
+	 }
+ }
+ bool xOrY(point a, point b, routingInst* rst){ //return true for rout x first, or false for route y
+	 point temp;
+	 int utilX = 0;
+	 int utilY = 0;
+	 int currEdge;
+	 if (a.x > b.x){
+		 temp = a;
+		 a = b;
+		 b = temp;
+	 }
+	 currEdge = getXEdge(a);
+	 utilX = rst->edgeUtils[currEdge] - rst->edgeCaps[currEdge];
+	 if (a.y > b.y){
+		 temp = a;
+		 a = b;
+		 b = temp;
+	 }
+	 currEdge = getXEdge(a);
+	 utilY = rst->edgeUtils[currEdge] - rst->edgeCaps[currEdge];
+	 if (utilX < utilY){
+		 return true;
+	 }
+	 else {
+		 return false;
 	 }
  }
 

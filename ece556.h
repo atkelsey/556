@@ -190,6 +190,8 @@ int solveRouting(routingInst *rst);
 
  void retrace (point S, point T, routingInst* rst, map<point, point> *parent, int netID);
 
+ bool xOrY(point a, point b, routingInst* rst);
+
  void init(point *S,
  	 map<point, int> *group,
  	 map<point, int> *distance,
