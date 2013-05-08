@@ -121,7 +121,7 @@
 				 tempEdge = rst->nets[i].croutes[0].segments.at(j).edges.at(k);
 				 //cout << "Cap " << rst->edgeCaps[tempEdge] << " Util "<< rst->edgeUtils[tempEdge] << "\n";
 				 if (rst->edgeCaps[tempEdge] != 0){
-					 netWeight = netWeight + (rst->edgeUtils[tempEdge] / rst->edgeCaps[tempEdge]);
+					 netWeight = netWeight + (rst->edgeUtils[tempEdge] - rst->edgeCaps[tempEdge]);
 					 rst->nets[i].weight = rst->nets[i].weight + netWeight;
 					 //cout << "weight " << rst->nets[i].weight << "\n";
 				 }
