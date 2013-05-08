@@ -25,8 +25,6 @@ void aStarRoute (routingInst* rst){
 	time_t startTime, elapsedTime;
 	time(&startTime);
 	int seconds = 0;
-	updateUtil(rst);
-	aStarRoute(rst);
 	while (seconds < (15*60)){
 	//for (i = 0; i < 5/*(rst->numNets * .0002 )*/; i++){
 		net currNet;
