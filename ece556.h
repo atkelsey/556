@@ -178,7 +178,7 @@ int solveRouting(routingInst *rst);
 
  int getXEdge(point smallerPt);
 
- int updateUtil(routingInst* rst);
+ void updateUtil(routingInst* rst);
 
  void getLRoute(routingInst *rst);
 
@@ -186,11 +186,13 @@ int solveRouting(routingInst *rst);
 
  void RipNet(routingInst* rst, int netID);
 
- int resetEdge(routingInst* rst);
+ void resetEdge(routingInst* rst);
 
  void retrace (point S, point T, routingInst* rst, map<point, point> *parent, int netID);
 
  bool xOrY(point a, point b, routingInst* rst);
+
+ void ZRoutes(routingInst *rst);
 
  void init(point *S,
  	 map<point, int> *group,

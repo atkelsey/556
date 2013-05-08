@@ -167,7 +167,8 @@ int readBenchmark(const char *fileName, routingInst *rst){
 
 int solveRouting(routingInst *rst){
 	cout << "Started routing...\n";
-	getLRoute(rst);
+//	getLRoute(rst);
+	ZRoutes(rst);
 //	time_t startTime, elapsedTime;
 //	time(&startTime);
 //	int seconds = 0;
