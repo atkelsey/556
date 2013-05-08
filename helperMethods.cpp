@@ -127,7 +127,7 @@
 				 }
 				 else {
 					 //cout << "BOOM \n";
-					 netWeight = (rst->edgeUtils[tempEdge]/ rst->cap);
+					 netWeight = rst->edgeUtils[tempEdge];
 					 rst->nets[i].weight = netWeight;
 				 }
 				 if (rst->edgeUtils[tempEdge] > rst->edgeCaps[tempEdge]){

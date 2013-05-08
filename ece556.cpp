@@ -97,7 +97,7 @@ int readBenchmark(const char *fileName, routingInst *rst){
 					vector<int> used;
 					point *tmp = new point[nets[net_cnt-1].numPins];
 					tmp[0] = pins[0];
-					cout << pins[0].x << pins[0].y << endl;
+					//cout << pins[0].x << pins[0].y << endl;
 					used.push_back(0);
 					int loc = 0;
 

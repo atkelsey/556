@@ -16,7 +16,7 @@ public:
 	}*/
 };
 void aStarRoute (routingInst* rst){
-	int i, j;
+	int j;
 	map<point, int> group;
 	map<point, int> distance;
 	map<point, int> score;
@@ -25,10 +25,12 @@ void aStarRoute (routingInst* rst){
 	time_t startTime, elapsedTime;
 	time(&startTime);
 	int seconds = 0;
-	while (seconds < (8*60)){
+	int maxWeight = rst->pQueNets.top().weight;
+	while ((seconds < (15*60))||(rst->pQueNets.top().weight<=maxWeight/2)){
 	//for (i = 0; i < 5/*(rst->numNets * .0002 )*/; i++){
 		net currNet;
 		currNet = rst->pQueNets.top();
+		//cout << currNet.weight;
 		RipNet(rst, currNet.id);
 		rst->pQueNets.pop();
 		for (j = 1; j < currNet.numPins; j++){
