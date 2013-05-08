@@ -94,9 +94,26 @@ int readBenchmark(const char *fileName, routingInst *rst){
 				pins[pin_cnt] = pin;
 				pin_cnt++;
 				if (pin_cnt == nets[net_cnt - 1].numPins){
-					//nets[net_cnt - 1].median.x = medX / pin_cnt;
-					//nets[net_cnt - 1].median.y = medY / pin_cnt;
-					nets[net_cnt - 1].pins = pins;
+					vector<int> used;
+					point *tmp = new point[nets[net_cnt-1].numPins];
+					tmp[0] = pins[0];
+					cout << pins[0].x << pins[0].y << endl;
+					used.push_back(0);
+					int loc = 0;
+
+					for(int j = 1; j < pin_cnt;j++) {
+							int min = 100000;
+							for (int i = 1; i < pin_cnt; i++) {
+								if ((manhattanDistance(&pins[i], &tmp[j-1]) < min)&&(find(used.begin(),used.end(), i)==used.end())) {
+									min = manhattanDistance(&pins[i], &tmp[j-1]) ;
+									loc = i;
+								}
+							}
+							//cout << pins[loc].x << pins[loc].y << endl;
+							tmp[j] = pins[loc];
+							used.push_back(loc);
+						}
+					nets[net_cnt - 1].pins = tmp;
 				}
 			}
 			else if (block > 0){
