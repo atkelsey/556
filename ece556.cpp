@@ -149,8 +149,8 @@ int readBenchmark(const char *fileName, routingInst *rst){
 int solveRouting(routingInst *rst){
 	cout << "Started routing...\n";
 	ZRoutes(rst);
-	//updateUtil(rst);
-	//aStarRoute(rst);
+	updateUtil(rst);
+	aStarRoute(rst);
 	cout << "Completed routing\n";
 	return 1;
 }
