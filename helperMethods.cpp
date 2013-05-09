@@ -191,24 +191,24 @@ void ZRoutes(routingInst *rst) {
 }
 
 /*Updates the net weights of each net after initial routing or rip up and reroute*/
-void updateUtil(routingInst* rst) {
-	int i, j, k, tempEdge;
-	//Clear the priority queue
+void updateUtil(routingInst* rst) {//Returns total overflow
+	int i, j, k, tempEdge, netWeight;
+	while (!(rst->pQueNets.empty())){
+		rst->pQueNets.pop();
+	}
 	while (!rst->pQueNets.empty()){
 		rst->pQueNets.pop();
 	}
-/*	For all nets reset the weight to zero and add the amount of utilization over the capacity of each edge
-	This is not the way it is described in the project specification; however, we found with experimentation
-	this produces better results*/
 	for (i = 0; i < rst->numNets; i++){
 		rst->nets[i].weight = 0;
 		for (j = 0; j < rst->nets[i].croutes[0].numSegs; j++){
+			netWeight = 0;
 			for(k = 0; k < rst->nets[i].croutes[0].segments.at(j).numEdges; k++){
 				tempEdge = rst->nets[i].croutes[0].segments.at(j).edges.at(k);
-				rst->nets[i].weight = rst->nets[i].weight + (rst->edgeUtils[tempEdge] - rst->edgeCaps[tempEdge]);
+				netWeight = netWeight + (rst->edgeUtils[tempEdge] - rst->edgeCaps[tempEdge]);
+				rst->nets[i].weight = rst->nets[i].weight + netWeight;
 			}
 		}
-		//Push the nets back into the queue in order of highest net weight
 		rst->pQueNets.push(rst->nets[i]);
 	}
 }
@@ -225,4 +225,3 @@ void RipNet(routingInst* rst, int net){
 	rst->nets[net].croutes[0].numSegs = 0;
 	cout << "Rerouting net: " << net << endl;
 }
-
