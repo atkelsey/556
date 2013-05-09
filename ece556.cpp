@@ -88,7 +88,8 @@ int readBenchmark(const char *fileName, routingInst *rst){
 					vector<int> used;
 					point *tmp = new point[nets[net_cnt-1].numPins];
 					int loc = 0;
-					//net decomposition, sorts pins in order of Manhattan Distance
+					//Net decomposition, sorts pins in order of Manhattan Distance
+					//Initially selects pin closest to origin as the first position
 					for(int j = 0; j < pin_cnt;j++) {
 							int min = 100000;
 							int min_init = 100000;
@@ -196,5 +197,3 @@ int release(routingInst *rst){
 	rst->nets = NULL;
 	return 1;
 }
-
-

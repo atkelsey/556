@@ -214,5 +214,3 @@ void retrace (point S, point A, routingInst* rst, map<point, point> *parent, int
 	rst->nets[netID].croutes[0].numSegs++;
 	rst->nets[netID].croutes[0].segments.push_back(seg);
 }
-
-

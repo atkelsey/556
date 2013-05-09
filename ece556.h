@@ -12,7 +12,6 @@
 #include <vector>
 #include <queue>
 #include <limits.h>
-#include <algorithm>
 using namespace std;
 
 
@@ -68,8 +67,7 @@ using namespace std;
    point p1 ; 	/* start point of a segment */
    point p2 ; 	/* end point of a segment */
    int numEdges ; 	/* number of edges in the segment*/
-   //int *edges ;  	/* array of edges representing the segment*/
-   vector<int> edges;
+   vector<int> edges; /* vector of edges representing the segment*/
 
  } segment ;
 
@@ -79,9 +77,8 @@ using namespace std;
   */
   typedef struct
   {
-	vector<segment> segments;
+	vector<segment> segments; /* vector of segments */
     int numSegs ;  	/* number of segments in a route*/
-    //segment *segments ;  /* an array of segments (note, a segment may be flat, L-shaped or any other shape, based on your preference */
 
   } route ;
 
@@ -98,11 +95,11 @@ using namespace std;
    int numCRoutes ; 	/* number of (candidate) routes of the net. This may be equal to one (only one candidate route) in your implementation. */
    route *croutes ;	/* array of candidate routes of the net. */
    int weight;
-   //point median ;
-   //priority_queue<point, vector<point>, PointComparator> pQuePins;
 
   } net ;
-
+  /**
+  * A comparator to sort the nets based on net weight
+  */
   struct NetComparator {
       bool operator() (const net& n1, const net& n2) {
           return n1.weight < n2.weight; //calls your operator
@@ -181,25 +178,13 @@ int solveRouting(routingInst *rst);
 
  void updateUtil(routingInst* rst);
 
- void getLRoute(routingInst *rst);
-
  void aStarRoute (routingInst* rst);
 
  void RipNet(routingInst* rst, int netID);
 
- void resetEdge(routingInst* rst);
-
  void retrace (point S, point T, routingInst* rst, map<point, point> *parent, int netID);
 
- bool xOrY(point a, point b, routingInst* rst);
-
  void ZRoutes(routingInst *rst);
-
- void init(point *S,
- 	 map<point, int> *group,
- 	 map<point, int> *distance,
- 	 map<point, int> *score,
- 	 map<point, point> *parent, routingInst *rst);
 
  extern int xGridSize;
  extern int yGridSize;
