@@ -88,7 +88,12 @@ void aStarRoute (routingInst* rst){
 						point * v_ptr = &v;
 						v.x = u.x;
 						v.y = u.y + 1;
-						tempDist = distance[u] + rst->edgeUtils[currEdge];
+						if (rst->edgeCaps[currEdge] == 0){
+							tempDist = distance[u] + rst->edgeUtils[currEdge] + rst->cap;
+						}
+						else {
+							tempDist = distance[u] + rst->edgeUtils[currEdge];
+						}
 						if ((3 == group[v]) && (distance[v] <= tempDist)){
 							//continue to next
 						}
@@ -109,7 +114,12 @@ void aStarRoute (routingInst* rst){
 						point * v_ptr = &v;
 						v.x = u.x + 1;
 						v.y = u.y;
-						tempDist = distance[u] + rst->edgeUtils[currEdge];
+						if (rst->edgeCaps[currEdge] == 0){
+							tempDist = distance[u] + rst->edgeUtils[currEdge] + rst->cap;
+						}
+						else {
+							tempDist = distance[u] + rst->edgeUtils[currEdge];
+						}
 						if ((3 == group[v]) && (distance[v] <= tempDist)){
 							//continue to next
 						}
@@ -132,7 +142,12 @@ void aStarRoute (routingInst* rst){
 						point * v_ptr = &v;
 						v.x = u.x;
 						v.y = u.y - 1;
-						tempDist = distance[u] + rst->edgeUtils[currEdge];
+						if (rst->edgeCaps[currEdge] == 0){
+							tempDist = distance[u] + rst->edgeUtils[currEdge] + rst->cap;
+						}
+						else {
+							tempDist = distance[u] + rst->edgeUtils[currEdge];
+						}
 						if ((3 == group[v]) && (distance[v] <= tempDist)){
 							//continue to next
 						}
@@ -155,7 +170,12 @@ void aStarRoute (routingInst* rst){
 						point * v_ptr = &v;
 						v.x = u.x - 1;
 						v.y = u.y;
-						tempDist = distance[u] + rst->edgeUtils[currEdge];
+						if (rst->edgeCaps[currEdge] == 0){
+							tempDist = distance[u] + rst->edgeUtils[currEdge] + rst->cap;
+						}
+						else {
+							tempDist = distance[u] + rst->edgeUtils[currEdge];
+						}
 						if ((3 == group[v]) && (distance[v] <= tempDist)){
 						}
 						else if ((2 != group[v]) || (distance[v] > tempDist)){
