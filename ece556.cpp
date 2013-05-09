@@ -10,7 +10,9 @@ int *edge_Utils;
 int block = 0;
 int xGridSize;
 int yGridSize;
-
+/*
+ * Read Benchmark parses the entire input file
+ */
 int readBenchmark(const char *fileName, routingInst *rst){
 	ifstream myFile(fileName,ifstream::in);
 	if (!myFile){ //if the file was not successfully opened
@@ -21,8 +23,6 @@ int readBenchmark(const char *fileName, routingInst *rst){
 	string line;
 	int net_cnt = 0;
 	int pin_cnt = 0;
-	//int medX = 0;
-	//int medY = 0;
 	while (!getline(myFile, line).eof()){
 		string result;
 		istringstream iss(line);
@@ -45,18 +45,15 @@ int readBenchmark(const char *fileName, routingInst *rst){
 				int y = rst->gy;
 				yGridSize = y;
 				rst->numEdges = y*(x - 1) + x*(y - 1);
-			//	cout << "grid = " << rst->gx << "*" << rst->gy << " with "<< rst->numEdges << " edges" << endl;
 			}
 			//parses the edge capacity
 			else if (result.find("capacity") != string::npos){
 				string token;
 				getline(iss, token, ' ');
 				istringstream(token) >> rst->cap;
-
 				edge_caps = new int[rst->numEdges];
 				edge_Utils = new int[rst->numEdges];
 				std::fill(edge_caps, edge_caps + rst->numEdges, rst->cap);
-			//	cout << "capacity = " << rst->cap << endl;
 			}
 			//parses number of nets
 			else if (result.find("num")!=string::npos){
@@ -64,7 +61,6 @@ int readBenchmark(const char *fileName, routingInst *rst){
 				getline(iss, token, ' ');
 				getline(iss, token, ' ');
 				istringstream(token) >> rst->numNets;
-			//	cout << "num nets = " << rst->numNets << endl;
 				nets = new net[rst->numNets];
 			}
 			//parses the net and number of pins
@@ -75,30 +71,24 @@ int readBenchmark(const char *fileName, routingInst *rst){
 				getline(iss, token, ' ');
 				istringstream(token) >> net.numPins;
 				nets[net_cnt] = net;
-				//cout << "Net = n" << nets[net_cnt].id << endl;
 				pins = new point[nets[net_cnt].numPins];
 				net_cnt++;
 				pin_cnt = 0;
-				//medX = 0;
-				//medY = 0;
 			}
 			//parses each pin
 			else if ((pin_cnt < nets[net_cnt - 1].numPins) && ((net_cnt-1) < rst->numNets) ){
 				point pin;
 				istringstream(result)>>pin.x;
-				//medX = pin.x + medX;
 				string token;
 				getline(iss,token,'\n');
 				istringstream(token) >> pin.y;
-				//medY = pin.y + medY;
 				pins[pin_cnt] = pin;
 				pin_cnt++;
 				if (pin_cnt == nets[net_cnt - 1].numPins){
 					vector<int> used;
 					point *tmp = new point[nets[net_cnt-1].numPins];
-					//cout << pins[0].x << pins[0].y << endl;
 					int loc = 0;
-
+					//net decomposition, sorts pins in order of Manhattan Distance
 					for(int j = 0; j < pin_cnt;j++) {
 							int min = 100000;
 							int min_init = 100000;
@@ -114,13 +104,13 @@ int readBenchmark(const char *fileName, routingInst *rst){
 									loc = i;
 								}
 							}
-							//cout << pins[loc].x << pins[loc].y << endl;
 							tmp[j] = pins[loc];
 							used.push_back(loc);
 						}
 					nets[net_cnt - 1].pins = tmp;
 				}
 			}
+			//adds the blockages and new edge capacities
 			else if (block > 0){
 				point p1;
 				point p2;
@@ -149,43 +139,23 @@ int readBenchmark(const char *fileName, routingInst *rst){
 	rst->nets = nets;
 	rst->edgeCaps = edge_caps;
 	rst->edgeUtils = edge_Utils;
-/*	for (int i = 0; i < rst->numEdges ; i++){
-		cout << rst->edgeCaps[i] << "\t";
-	}
-	cout << endl;
-	for (int i = 0; i < rst->numNets; i++){
-		cout << "Net n" << rst->nets[i].id;
-		cout << " num pins: " << rst->nets[i].numPins << endl;
-		for (int j = 0; j < rst->nets[i].numPins; j++){
-			cout << " pin " << j << ": " << rst->nets[i].pins[j].x << "," << rst->nets[i].pins[j].y << endl;
-		}
-	}*/
-
 	myFile.close();
 	return 1;
 }
-
+/*
+ * solves the routing instance
+ */
 int solveRouting(routingInst *rst){
 	cout << "Started routing...\n";
-//	getLRoute(rst);
 	ZRoutes(rst);
-//	time_t startTime, elapsedTime;
-//	time(&startTime);
-//	int seconds = 0;
 	updateUtil(rst);
-	//aStarRoute(rst);
-	//resetEdge(rst);
-//	while (seconds < (60)){ //main loop: add all end cases here (TOF is not increasing over multiple runs)
-//		//Compute edge weights and order nets in the priority queue (highest vales are worst)
-//		//route each net UPdate edge util/weights
-//		aStarRoute(rst);
-//		resetEdge(rst);
-//		seconds = time(&elapsedTime)-startTime;
-//	}
+	aStarRoute(rst);
 	cout << "Completed routing\n";
 	return 1;
 }
-
+/*
+ * wites the output file
+ */
 int writeOutput(const char *outRouteFile, routingInst *rst){
 	ofstream outFile(outRouteFile);
 	if (!outFile){
@@ -206,7 +176,9 @@ int writeOutput(const char *outRouteFile, routingInst *rst){
 	outFile.close();
 	return 1;
 }
-
+/*
+ * Frees up memory
+ */
 int release(routingInst *rst){
 	rst->cap = 0;
 	rst->numEdges = 0;
@@ -221,7 +193,6 @@ int release(routingInst *rst){
 		delete [] rst->nets[i].pins;
 	}
 	rst->numNets = 0;
-	//delete rst->nets;
 	rst->nets = NULL;
 	return 1;
 }
