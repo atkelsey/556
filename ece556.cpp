@@ -155,7 +155,7 @@ int solveRouting(routingInst *rst){
 	return 1;
 }
 /*
- * wites the output file
+ * Writes the output file
  */
 int writeOutput(const char *outRouteFile, routingInst *rst){
 	ofstream outFile(outRouteFile);
